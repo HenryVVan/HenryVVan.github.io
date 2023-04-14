@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.111.3">
+
+  <title>夯实基本功之C&#43;&#43;语言 &middot; Henry&#39;s blog</title>
+
+    
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
+
+  
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+
+  <link rel="shortcut icon" href="https://github.com/HenryVVan/HenryVVan.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small></small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>夯实基本功之C&#43;&#43;语言</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>31 Mar 2023, 09:03</time>
+  </div>
+
+  
+
+  
+
+  
+
+</div>
+
+  <h2 id="1c基础">1、C++基础</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">namespace</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">// 定义命名空间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">namespace</span> <span class="n">space_A</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="err">&#39;</span><span class="p">{}</span><span class="err">&#39;包围的范围是其作用域</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">namespace</span><span class="err">可以嵌套，此外直接</span><span class="k">using</span> <span class="err">一个</span><span class="n">namespace</span><span class="err">时要注意不会引起歧义</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">嵌套命名空间时，对其他命名空间的引用要放在整体命名空间的最下面</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 命名空间代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">namespace</span> <span class="n">space_a</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">namespace</span> <span class="n">space_b</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">struct</span> <span class="nc">teacher</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="c1">// namespace space_b
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">using</span> <span class="k">namespace</span> <span class="n">space_b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 主函数代码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">using</span> <span class="k">namespace</span> <span class="n">space_a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">teacher</span> <span class="n">t</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span></code></pre></div><h2 id="2c对c的增强和bool">2、C++对C的增强和bool</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="mi">1</span><span class="err">、</span><span class="n">C</span><span class="err">语言要先定义再使用</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="o">++</span><span class="err">中的变量可以随用随定义</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="mi">2</span><span class="err">、</span><span class="n">C</span><span class="o">++</span><span class="err">对全部变量检测能力增强</span>
+</span></span><span class="line"><span class="cl"><span class="err">全局区</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">g</span><span class="p">;</span> <span class="c1">// bss段分配
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kt">int</span> <span class="n">g</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">// data段分配
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// C能通过、c++有重定义警告
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">在</span><span class="n">C</span><span class="err">语言里会认为：先定义，再赋值</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span><span class="err">、</span><span class="n">struct</span><span class="err">结构体增强，在</span><span class="n">C</span><span class="err">语言定义结构体变量，需要用</span><span class="k">struct</span><span class="err">/</span><span class="nc">typedef</span>
+</span></span><span class="line"><span class="cl">	<span class="n">C</span><span class="o">++</span><span class="err">中不需要加</span><span class="n">struct</span><span class="err">关键字（</span><span class="n">C</span><span class="o">++</span><span class="err">中当类处理）</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span><span class="err">、函数增强</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="err">语言中：未指明返回类型也能通过</span>
+</span></span><span class="line"><span class="cl">	<span class="n">f</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="err">也能通过</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="o">++</span><span class="err">做了检测，便于程序员判断</span>
+</span></span><span class="line"><span class="cl">	<span class="n">C</span><span class="o">++</span> <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="err">会有</span><span class="n">waring</span><span class="err">，不支持多传形参</span>
+</span></span><span class="line"><span class="cl"><span class="mi">5</span><span class="err">、增加</span><span class="n">bool</span><span class="err">类型</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="err">语言中：</span><span class="mi">0</span><span class="err">假、其他真</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="o">++</span><span class="err">中：增加了</span><span class="n">bool</span><span class="err">类型</span> <span class="nb">true</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">false</span> <span class="mi">0</span><span class="err">，也兼容</span><span class="n">C</span>
+</span></span></code></pre></div><h2 id="3c对三目运算符的增强">3、C++对三目运算符的增强</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1、三目运算符(?)增强
+</span></span><span class="line"><span class="cl">C中, （a &gt; b) ? a : b 是一个右值
+</span></span><span class="line"><span class="cl">C++中，三目运算符返回是一个左值（or 引用），可以赋值
+</span></span></code></pre></div><h2 id="4const增强">4、const增强</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="nf">a</span> <span class="p">(</span><span class="err">常量需要初始化</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="k">const</span> <span class="n">a</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">// 这两个等价， 都是常整型数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span> <span class="n">c</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// const 修饰其右最近内容，此处只c所指向的int内容不能被修改
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="k">const</span> <span class="o">*</span> <span class="n">d</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 此处表示指针d指向的内容不能被修改
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span> <span class="k">const</span> <span class="n">e</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 此处表示指针d与其所指向的内存都不可被修改
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">符号表在只读区的</span><span class="n">text</span><span class="err">段（地址对程序员不可知），所以</span><span class="n">C</span><span class="o">++</span><span class="err">中的</span><span class="k">const</span> <span class="n">int</span><span class="err">变量是真正的常量，而在</span><span class="n">C</span><span class="err">中仍是一个可以通过指针去修改的变量，它会在栈中开辟空间。</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">int</span><span class="err">型变量，</span><span class="n">C</span><span class="o">++</span><span class="err">编译器自动将其对应到符号表中的</span>
+</span></span><span class="line"><span class="cl"><span class="n">key</span> <span class="o">-&gt;</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span>	 	<span class="mi">10</span>
+</span></span><span class="line"><span class="cl"><span class="err">该操作与在预处理（展开）阶段的宏定义有点类似</span>
+</span></span><span class="line"><span class="cl"><span class="err">编译器将常变量直接视为常量</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="err">指向的是编译器临时分配的一个存放</span><span class="n">a</span><span class="err">的值的空间，该空间与</span><span class="n">a</span><span class="err">无关。</span>
+</span></span></code></pre></div><h2 id="5枚举增强">5、枚举增强</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">C</span><span class="err">中</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 无需赋值也是自动赋0 1 2 3...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">enum</span> <span class="nc">season</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">SPR</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">SUM</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">AUT</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 可以把int类型赋给枚举类型，但在实际使用中不知道对应哪个
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">enum</span> <span class="nc">season</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="o">++</span><span class="err">中</span>
+</span></span><span class="line"><span class="cl"><span class="k">enum</span> <span class="nc">season</span> <span class="n">a</span> <span class="o">=</span> <span class="n">SPR</span> <span class="p">(</span><span class="err">不可将枚举类型改成</span><span class="n">int</span><span class="err">型</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="6c对c的拓展引用类型">6、C++对C的拓展：引用类型</h2>
+<p><strong>①引用没有定义，是一种关系型声明，声明它与原来的某一变量（实体）的关系，所以其类型应与原类型保持一致，且不分配内存，与被引用的变量具有相同地址，在常量区有空间，对程序员不可见，不在栈上开辟空间</strong></p>
+<p><strong>②引用必须要初始化，一经声明，不可改变</strong></p>
+<p><strong>③可对引用进行再次引用，多次引用的作用效果是：某一变量具有多个别名</strong></p>
+<p><strong>④&amp; 符号前有数据类型时，是引用，其余情况是取地址</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">C</span><span class="err">中可以用</span><span class="k">typedef</span> <span class="err">可以对</span> <span class="err">类型改名，但无法对变量使用</span>
+</span></span><span class="line"><span class="cl"><span class="err">引用</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="err">；</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// b是对a的引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="err">修改</span><span class="n">b</span><span class="err">，</span><span class="n">a</span><span class="err">也会随之修改</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="err">中改变形参数值</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">change</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="o">++</span><span class="err">中省去对指针的操作</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">change</span><span class="p">(</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">p</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">------------------------------------------</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 结构体
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">stu</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 值拷贝
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">print0</span><span class="p">(</span><span class="n">stu</span> <span class="n">a</span><span class="p">)</span> <span class="n">stu</span> <span class="n">a</span> <span class="o">=</span> <span class="n">s</span><span class="p">,</span> <span class="err">值拷贝，慢</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">.</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">print2</span><span class="p">(</span><span class="n">stu</span> <span class="o">*</span><span class="n">a</span><span class="p">)</span> <span class="err">传地址</span> <span class="n">stu</span> <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">print1</span><span class="p">(</span><span class="n">stu</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span> <span class="err">传引用</span> <span class="n">stu</span> <span class="o">&amp;</span><span class="n">a</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="err">高效</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="p">.</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">u</span><span class="p">)</span> <span class="c1">// u 在函数调用传参时，一定会被初始化
+</span></span></span></code></pre></div><h2 id="7引用的本质">7、引用的本质</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">引用所占的大小，与指针是相等的
+</span></span><span class="line"><span class="cl">常量需要初始化，引用也要初始化，引用可能是一个常量
+</span></span><span class="line"><span class="cl">所以引用本质上是一个常指针，但在code时将其视为一个别名即可
+</span></span><span class="line"><span class="cl">引用的本质：是常指针，类似于int const * p， but此处的*p是一个右值，不可修改
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">可以修改指针所指向的地址的值： *p = 1; 不可以让p ++，不改变指针指向
+</span></span></code></pre></div><h2 id="8常量指针">8、常量指针</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span> <span class="k">const</span> <span class="n">p</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="err">指针在常量区，指的内容可变</span><span class="p">,</span> <span class="err">指向不可变</span>  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">栈</span>					<span class="err">常量区</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">a</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>		<span class="o">&lt;-</span>		  <span class="n">a</span>
+</span></span><span class="line"><span class="cl"><span class="n">b</span>					  <span class="n">r</span>
+</span></span></code></pre></div><h2 id="9引用作为函数的返回值">9、引用作为函数的返回值</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">直接传值，会有一个值拷贝动作，效率比较低</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">&amp;</span> <span class="n">get</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 返回的是栈中的变量，执行完会销毁
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">VScode</span><span class="err">中会直接不允许该操作</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">注：不要返回局部变量的引用</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">&amp;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">get</span><span class="p">();</span> <span class="c1">// 返回的是局部变量a的引用，在这句话执行完成后会被OS自动回收，会出错
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">建议：</span><span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">get</span><span class="p">();</span> <span class="c1">// 应该使用值传递，将a的别名的地址传出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">将</span><span class="n">a</span><span class="err">前面用</span><span class="n">static</span><span class="err">修饰即可传出，因为那样开辟的是全局变量，在程序执行完才收回内存，另外也可以由程序员自己在堆区开辟变量。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">此外，如果函数返回的是引用的话，可以将这个函数当左值，</span><span class="n">C</span><span class="err">中都是右值。</span>
+</span></span><span class="line"><span class="cl">    <span class="n">getA</span><span class="p">()</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">getA</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="err">函数返回可以当左值，因为返回的是其本身，返回局部变量的引用不可以当左值</span>
+</span></span></code></pre></div><h2 id="10指针引用">10、指针引用</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">简化多级指针操作</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">teacher</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 指针的引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">get</span><span class="p">(</span><span class="k">struct</span> <span class="nc">teacher</span> <span class="o">*&amp;</span><span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">struct</span> <span class="nc">teacher</span> <span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="k">struct</span> <span class="nc">teacher</span> <span class="o">*</span><span class="p">)</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">teacher</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 判空后再操作
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">free</span><span class="p">(</span><span class="k">struct</span> <span class="nc">teacher</span> <span class="o">*&amp;</span><span class="n">t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">free</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">teacher</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+</span></span></code></pre></div><h2 id="11const修饰引用">11、const修饰引用</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">const</span> <span class="err">一般作用于函数形参上，用于保护形参，保护传入参数不被修改</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// 如果想对一个常量进行引用，必须是一个const引用
+</span></span></span><span class="line"><span class="cl"><span class="c1">// int &amp;b 被const修饰，不可修改b的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">d</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>              <span class="c1">// 可以把一个普通变量，用一个const引用去接受，提高其安全性
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// 无法修改const引用的值，只能直接去修改int变量的值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">c</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">d</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 这个print函数可以保证在函数内部，re不会被修改，but main中仍可修改
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">printRe</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">re</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;re = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">re</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="12判断const所修饰对象">12、判断const所修饰对象</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span>  <span class="err">修饰</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="k">const</span>  <span class="err">修饰</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span> <span class="k">const</span> <span class="o">:</span><span class="err">指针本身、指向的内容也不可改变</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span> <span class="err">修饰</span><span class="kt">int</span><span class="err">，表示指针指向的内容不可变</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span> <span class="k">const</span> <span class="err">：指针本身不可改变，常量指针</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="err">修饰，先看左边，左边没有对象，再看右边</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">顶层</span><span class="k">const</span><span class="err">：对象本身是一个</span><span class="k">const</span><span class="err">，</span><span class="n">eg</span><span class="err">：</span><span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="err">，对象本身是一个指针，但此处的</span><span class="n">const</span><span class="err">作用于</span><span class="kt">int</span><span class="err">，所以是底层</span><span class="k">const</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="o">*</span> <span class="k">const</span><span class="err">：</span><span class="n">const</span><span class="err">作用于指针上，而该变量本身就是一个指针，所以是顶层</span><span class="k">const</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">eg</span><span class="err">：顶层</span><span class="k">const</span><span class="err">，在传参时&#39;</span><span class="k">const</span><span class="err">&#39;会被忽略，进而提示重定义</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">注意： 对一个常量的引用，不能直接用 int &amp; 去修饰，因为这样的话该常量就可以被改变了，所以需要用const修饰
+</span></span><span class="line"><span class="cl">const int &amp; a = 40;
+</span></span><span class="line"><span class="cl">对常量加引用需要加const，不能直接用，加const的话，a就是常量40所分配的临时空间变量的别名
+</span></span></code></pre></div>
+  
+  <h4><i class="fas fa-share-alt" aria-hidden="true"></i>&nbsp;Share!</h4>
+<ul class="share-buttons">
+	<li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f01-%25E5%259F%25BA%25E7%25A1%2580%25E5%25BC%2595%25E7%2594%25A8%2f" target="_blank" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span class="sr-only">Share on Facebook</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://twitter.com/intent/tweet?source=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f01-%25E5%259F%25BA%25E7%25A1%2580%25E5%25BC%2595%25E7%2594%25A8%2f" target="_blank" title="Tweet"><i class="fab fa-twitter" aria-hidden="true"></i><span class="sr-only">Tweet</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://plus.google.com/share?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f01-%25E5%259F%25BA%25E7%25A1%2580%25E5%25BC%2595%25E7%2594%25A8%2f" target="_blank" title="Share on Google+"><i class="fab fa-google-plus" aria-hidden="true"></i><span class="sr-only">Share on Google+</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.tumblr.com/share?v=3&u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f01-%25E5%259F%25BA%25E7%25A1%2580%25E5%25BC%2595%25E7%2594%25A8%2f" target="_blank" title="Post to Tumblr"><i class="fab fa-tumblr" aria-hidden="true"></i><span class="sr-only">Post to Tumblr</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f01-%25E5%259F%25BA%25E7%25A1%2580%25E5%25BC%2595%25E7%2594%25A8%2f" target="_blank" title="Pin it"><i class="fab fa-pinterest-p" aria-hidden="true"></i><span class="sr-only">Pin it</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.reddit.com/submit?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f01-%25E5%259F%25BA%25E7%25A1%2580%25E5%25BC%2595%25E7%2594%25A8%2f" target="_blank" title="Submit to Reddit"><i class="fab fa-reddit-alien" aria-hidden="true"></i><span class="sr-only">Submit to Reddit</span></a>
+	</li>
+</ul>
+
+
+<style>
+	ul.share-buttons{
+	  list-style: none;
+	  padding: 0;
+	}
+
+	ul.share-buttons li{
+	  display: inline;
+	}
+
+	ul.share-buttons .sr-only{
+	  position: absolute;
+	  clip: rect(1px 1px 1px 1px);
+	  clip: rect(1px, 1px, 1px, 1px);
+	  padding: 0;
+	  border: 0;
+	  height: 1px;
+	  width: 1px;
+	  overflow: hidden;
+	}
+</style>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/02-%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/02-%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/ui.js"></script>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/menus.js"></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

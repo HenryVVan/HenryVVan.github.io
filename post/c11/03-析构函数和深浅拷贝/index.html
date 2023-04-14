@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.111.3">
+
+  <title>夯实基本功之C&#43;&#43;语言 &middot; Henry&#39;s blog</title>
+
+    
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
+
+  
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+
+  <link rel="shortcut icon" href="https://github.com/HenryVVan/HenryVVan.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small></small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>夯实基本功之C&#43;&#43;语言</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>03 Apr 2023, 15:21</time>
+  </div>
+
+  
+
+  
+
+  
+
+</div>
+
+  <h2 id="03-析构函数和深浅拷贝">03 析构函数和深浅拷贝</h2>
+<h2 id="1构造和析构">1、构造和析构</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">创建一个对象之后，让对象立刻拥有你希望它具有的值</span>
+</span></span><span class="line"><span class="cl"><span class="err">如果不用构造函数初始化，需要为每个类提供一个</span><span class="n">public</span><span class="err">的</span><span class="n">init</span><span class="err">函数，再对象创建后立即调用</span><span class="n">init</span><span class="err">函数进行初始化</span>
+</span></span><span class="line"><span class="cl"><span class="err">缺点：</span><span class="n">init</span><span class="err">只是一个普通函数，必须显示调用</span>
+</span></span><span class="line"><span class="cl">     <span class="err">如果失误，对象没有初始化，那么结果将不确定，此外没有初始化的对象，内部成员变量的值是不缺定的。</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">此时需要引入构造函数，与类同名的没有返回值函数，可以被重载；析构不可以被重载</span>
+</span></span><span class="line"><span class="cl"><span class="nl">eg</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">class</span> <span class="nc">Test</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Test</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Test</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="o">~</span><span class="n">Test</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl">	<span class="p">};</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="nl">main</span><span class="p">:</span> <span class="n">Test</span> <span class="n">t1</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// 创建t1对象并初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	  <span class="o">~</span><span class="n">Test</span><span class="p">()</span> <span class="err">析构函数，不允许有返回值与形参，在一个函数生命周期结束后</span><span class="n">OS</span><span class="err">会自动回收其所分配的栈区内存，但不会回收堆区内存，析构函数的作用是用户在该区域内回收前面分配的内存，防止内存泄漏。</span>
+</span></span></code></pre></div><h2 id="2默认的无参构造和析构函数">2、默认的无参构造和析构函数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">在用户没有显示提供任何构造函数的情况下，函数中存在默认的无参构造函数，可以直接调用Test t1
+</span></span><span class="line"><span class="cl">在用户没有显示提供任何析构函数的情况下，函数中也会有一个默认析构函数
+</span></span></code></pre></div><h2 id="3拷贝构造函数">3、拷贝构造函数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">拷贝构造函数：用一个类对象来初始化另一个类对象</span>
+</span></span><span class="line"><span class="cl"><span class="err">构造函数在创建新对象时使用</span>
+</span></span><span class="line"><span class="cl"><span class="nl">eg</span><span class="p">:</span> <span class="n">Test</span> <span class="n">t1</span><span class="p">;</span> <span class="c1">// 调用无参构造赋初值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">Test</span> <span class="nf">t2</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span> <span class="c1">// 用t1对象来为t2对象赋初值，这里就是拷贝构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="err">拷贝构造函数：</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 用const将赋值变量保护起来
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">Test</span><span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span> <span class="n">another</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">x</span> <span class="o">=</span> <span class="n">another</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">...</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">用户不显示的写拷贝构造函数，会调用默认的</span>
+</span></span><span class="line"><span class="cl"><span class="n">Test</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">t1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Test</span> <span class="nf">t2</span><span class="p">(</span><span class="n">t1</span><span class="p">);</span> <span class="c1">// 这两个操作等价
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">Test</span> <span class="n">t4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">t4</span> <span class="o">=</span> <span class="n">t1</span><span class="p">;</span> <span class="c1">// 这里是调用t4的操作符函数 赋值，不是拷贝构造
+</span></span></span></code></pre></div><h2 id="4类中默认函数的隐藏条件">4、类中默认函数的隐藏条件</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="mi">1</span><span class="err">、当类中没有任何显式的构造函数（显式的无参构造、显式的有参构造、显示的拷贝构造函数时），默认的无参构造函数就会出现。</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span><span class="err">、当没有显式拷贝构造时，默认拷贝构造就会出现，有显式的有参构造也不会影响。</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span><span class="err">、有默认的析构函数（</span><span class="n">OS</span><span class="err">会自动调，手动调用需要保证调用两次不会对函数产生奇怪影响），没有显式的析构函数时会出现</span>
+</span></span></code></pre></div><h2 id="5拷贝构造函数应用场景">5、拷贝构造函数应用场景</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">析构函数的调用顺序，与构造相反，（与出栈类似）</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Test</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Test</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Test</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_y</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 默认拷贝，直接赋值，不考虑指针、引用什么类型，会发生浅拷贝
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Test</span><span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">another</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_x</span> <span class="o">=</span> <span class="n">another</span><span class="p">.</span><span class="n">m_x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_y</span> <span class="o">=</span> <span class="n">another</span><span class="p">.</span><span class="n">m_y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;拷贝构造&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">Test</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;析构&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m_x</span><span class="p">,</span> <span class="n">m_y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">t1</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Test</span> <span class="n">t1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Test</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">t1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 先析构t2，再析构t1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">操作符函数</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 操作符 赋值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Test</span> <span class="o">&amp;</span><span class="n">another</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;操作符&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_x</span> <span class="o">=</span> <span class="n">another</span><span class="p">.</span><span class="n">m_x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_y</span> <span class="o">=</span> <span class="n">another</span><span class="p">.</span><span class="n">m_y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">main</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Test</span> <span class="n">t2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t2</span> <span class="o">=</span> <span class="n">t1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">拷贝构造</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">fun</span><span class="p">(</span><span class="n">Test</span> <span class="n">t</span><span class="p">)</span> <span class="c1">// Test t = t1; 拷贝构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;fun&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Test</span> <span class="nf">t1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fun</span><span class="p">(</span><span class="n">t1</span><span class="p">);</span> <span class="c1">// 执行的操作： Test t = t1; 此处调用了拷贝构造
+</span></span></span></code></pre></div><h3 id="i-拷贝构造的其他应用场景c11-的rvo优化无需产生匿名对象">I 拷贝构造的其他应用场景（C11 的RVO优化，无需产生匿名对象）</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Test</span> <span class="nf">fun2</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;fun2&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Test</span> <span class="n">tmp</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// tmp.print();
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">tmp</span><span class="p">;</span> <span class="c1">//  Test xx = tmp 将tmp传给某匿名对象(拷贝构造)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">t2</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;t2&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// Test x = fun2(); // 此处不会再触发拷贝，即将匿名对象改名字
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// x.print();
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">fun2</span><span class="p">();</span> <span class="c1">// 调用完成 匿名对象被析构
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;t2 end&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">黑马课上的执行结果是：</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fun2</span>
+</span></span><span class="line"><span class="cl">    <span class="err">析构匿名对象</span>
+</span></span><span class="line"><span class="cl">    <span class="err">析构</span><span class="n">tmp</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t2</span> <span class="n">end</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">system</span><span class="p">(</span><span class="s">&#34;pause&#34;</span><span class="p">)</span> <span class="err">会影响一般析构函数的调用</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">而在</span><span class="n">C11</span><span class="err">中，编译器对其进行了一个“</span><span class="n">RVO</span><span class="err">”（返回值优化），在</span><span class="n">RVO</span><span class="err">优化中，编译器可以避免创建一个临时变量（此处的匿名变量）来存放返回值，而是直接将返回值放在调用方分配的内存里，从而避免拷贝构造函数的调用，在这种情况下就不会产生匿名对象，也就不会有匿名对象被析构的情况发生。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">Test</span> <span class="n">fun2</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;fun2&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Test</span> <span class="nf">tmp</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tmp</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">tmp</span><span class="p">;</span> <span class="c1">//  Test xx = tmp 将tmp传给某匿名对象(拷贝构造)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">tmp</span> <span class="err">时会发生拷贝构造</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">t2</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;t2&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Test</span> <span class="n">x</span><span class="p">;</span>     <span class="c1">// 无参构造
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// C++中一个变量只能初始化一次
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">x</span> <span class="o">=</span> <span class="n">fun2</span><span class="p">();</span> <span class="c1">// =操作符重载，tmp被析构
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">x</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 最后x被析构
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;t2 end&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="ii-操作符重载">II 操作符重载</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">    <span class="n">Test</span> <span class="n">x</span><span class="p">;</span>     <span class="c1">// 无参构造
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">x</span> <span class="o">=</span> <span class="n">fun2</span><span class="p">();</span> <span class="c1">// =操作符运算，tmp被析构
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="err">某些类中操作符特定的操作符行为，使该操作符可以作用在该类的对象上。操作符重载允许用户使用常见的数学和逻辑操作符，如加号、减号、等号等，用于自定义类型的对象上。例如，可以重载加号运算符，使得它能够将两个自定义类型的对象相加，就像对两个整数或浮点数进行相加一样。</span>
+</span></span><span class="line"><span class="cl">    <span class="err">操作符重载语法：类名</span> <span class="o">+</span> <span class="k">operator</span><span class="err">&#39;要重载的操作符&#39;</span> <span class="p">(....)</span> 
+</span></span><span class="line"><span class="cl">    <span class="nl">eg</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    	<span class="n">MyClass</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">MyClass</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    	<span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="err">在这个例子中，</span><span class="k">operator</span><span class="o">+</span> <span class="err">函数将两个</span> <span class="n">MyClass</span> <span class="err">类型的对象相加，并返回一个新的</span> <span class="n">MyClass</span> <span class="err">对象。当使用加号运算符时，编译器会自动调用这个函数。例如：</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MyClass</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span> <span class="c1">// 编译器将自动调用 operator+ 函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">需要注意的是，操作符重载函数也可以重载为成员函数和非成员函数。成员函数的第一个参数是隐式的调用对象，非成员函数的第一个参数是显式的对象。此外，还应该遵循一些操作符重载的规则，比如避免改变操作符的基本语义，保持操作符的结合性和优先级等。</span>
+</span></span><span class="line"><span class="cl">    
+</span></span></code></pre></div><h2 id="6深浅拷贝为了防止内存泄漏与重复释放同一块内存">6、深、浅拷贝（为了防止内存泄漏，与重复释放同一块内存）</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">深拷贝：可以拷贝</span> <span class="err">被拷贝处的一切内容，包括但不限于指针所指向的内容</span>
+</span></span><span class="line"><span class="cl"><span class="err">浅拷贝：可以拷贝指针，但是不拷贝指针所指向的内容</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 深浅拷贝练习
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Teacher</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Teacher</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_name</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">strcpy</span><span class="p">(</span><span class="n">m_name</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">Teacher</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;析构&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">m_name</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">free</span><span class="p">(</span><span class="n">m_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m_name</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_id</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">m_name</span><span class="p">;</span> <span class="c1">// 分配指针空间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// char name[64]; // 分配栈上空间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">test</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Teacher</span> <span class="n">t1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#34;wh&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t1</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 调用默认拷贝构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Teacher</span> <span class="n">t2</span><span class="p">(</span><span class="n">t1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t2</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// t2 指向的空间被释放，然后释放t1，free()出错
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">system</span><span class="p">(</span><span class="s">&#34;pause&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//     Teacher t2(t1);调用默认拷贝构造函数只会将两个对象的name指向同一块内存，在t2执行完成后，t2调用析构函数，会将动态内存区释放，但t1仍会调用析构函数，此时free()出错
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">正确的代码，应该通过修改默认拷贝函数实现</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Teacher</span><span class="p">(</span><span class="k">const</span> <span class="n">Teacher</span> <span class="o">&amp;</span><span class="n">another</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_id</span> <span class="o">=</span> <span class="n">another</span><span class="p">.</span><span class="n">m_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">another</span><span class="p">.</span><span class="n">m_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">char</span> <span class="o">*</span><span class="n">m_name</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">strcpy</span><span class="p">(</span><span class="n">m_name</span><span class="p">,</span> <span class="n">another</span><span class="p">.</span><span class="n">m_name</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><p><strong>bug</strong>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">为已经默认初始化的变量，再申请内存并指向它时，误在其名前写上数据类型，会引起非左值报错
+</span></span></code></pre></div><p><strong>注意：构造函数中申请了堆区空间，在析构函数中一定要及时释放</strong></p>
+
+  
+  <h4><i class="fas fa-share-alt" aria-hidden="true"></i>&nbsp;Share!</h4>
+<ul class="share-buttons">
+	<li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f03-%25E6%259E%2590%25E6%259E%2584%25E5%2587%25BD%25E6%2595%25B0%25E5%2592%258C%25E6%25B7%25B1%25E6%25B5%2585%25E6%258B%25B7%25E8%25B4%259D%2f" target="_blank" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span class="sr-only">Share on Facebook</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://twitter.com/intent/tweet?source=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f03-%25E6%259E%2590%25E6%259E%2584%25E5%2587%25BD%25E6%2595%25B0%25E5%2592%258C%25E6%25B7%25B1%25E6%25B5%2585%25E6%258B%25B7%25E8%25B4%259D%2f" target="_blank" title="Tweet"><i class="fab fa-twitter" aria-hidden="true"></i><span class="sr-only">Tweet</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://plus.google.com/share?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f03-%25E6%259E%2590%25E6%259E%2584%25E5%2587%25BD%25E6%2595%25B0%25E5%2592%258C%25E6%25B7%25B1%25E6%25B5%2585%25E6%258B%25B7%25E8%25B4%259D%2f" target="_blank" title="Share on Google+"><i class="fab fa-google-plus" aria-hidden="true"></i><span class="sr-only">Share on Google+</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.tumblr.com/share?v=3&u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f03-%25E6%259E%2590%25E6%259E%2584%25E5%2587%25BD%25E6%2595%25B0%25E5%2592%258C%25E6%25B7%25B1%25E6%25B5%2585%25E6%258B%25B7%25E8%25B4%259D%2f" target="_blank" title="Post to Tumblr"><i class="fab fa-tumblr" aria-hidden="true"></i><span class="sr-only">Post to Tumblr</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f03-%25E6%259E%2590%25E6%259E%2584%25E5%2587%25BD%25E6%2595%25B0%25E5%2592%258C%25E6%25B7%25B1%25E6%25B5%2585%25E6%258B%25B7%25E8%25B4%259D%2f" target="_blank" title="Pin it"><i class="fab fa-pinterest-p" aria-hidden="true"></i><span class="sr-only">Pin it</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.reddit.com/submit?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f03-%25E6%259E%2590%25E6%259E%2584%25E5%2587%25BD%25E6%2595%25B0%25E5%2592%258C%25E6%25B7%25B1%25E6%25B5%2585%25E6%258B%25B7%25E8%25B4%259D%2f" target="_blank" title="Submit to Reddit"><i class="fab fa-reddit-alien" aria-hidden="true"></i><span class="sr-only">Submit to Reddit</span></a>
+	</li>
+</ul>
+
+
+<style>
+	ul.share-buttons{
+	  list-style: none;
+	  padding: 0;
+	}
+
+	ul.share-buttons li{
+	  display: inline;
+	}
+
+	ul.share-buttons .sr-only{
+	  position: absolute;
+	  clip: rect(1px 1px 1px 1px);
+	  clip: rect(1px, 1px, 1px, 1px);
+	  padding: 0;
+	  border: 0;
+	  height: 1px;
+	  width: 1px;
+	  overflow: hidden;
+	}
+</style>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/06-%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7newdelete/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/06-%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7newdelete/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/04-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8%E4%B8%8Enewdeletestatic/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/04-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8%E4%B8%8Enewdeletestatic/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/ui.js"></script>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/menus.js"></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

@@ -2,22 +2,97 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Henry&#39;s blog</title>
-    <link>https://HenryVVan.github.io/%20--buildDrafts/</link>
+    <link>https://github.com/HenryVVan/HenryVVan.github.io/</link>
     <description>Recent content on Henry&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 13 Apr 2023 19:53:08 +0800</lastBuildDate><atom:link href="https://HenryVVan.github.io/%20--buildDrafts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Apr 2023 19:53:08 +0800</lastBuildDate><atom:link href="https://github.com/HenryVVan/HenryVVan.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>DP概论</title>
-      <link>https://HenryVVan.github.io/%20--buildDrafts/post/test/</link>
+      <title>深入剖析常用算法与数据结构</title>
+      <link>https://github.com/HenryVVan/HenryVVan.github.io/post/%E7%AE%97%E6%B3%95%E5%85%A5%E9%97%A8/0-dp%E6%A6%82%E8%AE%BA/</link>
       <pubDate>Thu, 13 Apr 2023 19:53:08 +0800</pubDate>
       
-      <guid>https://HenryVVan.github.io/%20--buildDrafts/post/test/</guid>
+      <guid>https://github.com/HenryVVan/HenryVVan.github.io/post/%E7%AE%97%E6%B3%95%E5%85%A5%E9%97%A8/0-dp%E6%A6%82%E8%AE%BA/</guid>
       <description>dp概论 dp的基本要求 1、最优子结构：大问题的（最优）解可以由小问题的（最优）解推出，注意：在问题拆解过程中不能出现无限递归；
 2、无后效性：未来与过去无关，一旦得到了一个小问题的解，如何得到它的解的过程不影响大问题的求解。
 dp的两个元素 1、**状态：**求解过程进行到了哪一步，可以理解为一个子问题；
 2、**转移：**从一个状态（小问题）的（最优）解推导出另一个状态（大问题）的（最优解）的过程。
 1：单源最短路径板子 给定一幅 n(1≤n≤1000) 个点 m(1≤m≤1000) 条边的有向图，每条边有个边权，代表经过这条边需要花费的时间，我们只能从编号小的点走到编号大的点，问从 1 号点走到 n 号点最少需要花费多少时间？</description>
+    </item>
+    
+    <item>
+      <title>夯实基本功之C&#43;&#43;语言</title>
+      <link>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/08-%E5%A4%9A%E7%BB%A7%E6%89%BF%E8%99%9A%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81%E8%99%9A%E6%9E%90%E6%9E%84/</link>
+      <pubDate>Mon, 10 Apr 2023 13:40:08 +0800</pubDate>
+      
+      <guid>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/08-%E5%A4%9A%E7%BB%A7%E6%89%BF%E8%99%9A%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81%E8%99%9A%E6%9E%90%E6%9E%84/</guid>
+      <description>8、多继承、虚继承、多态、虚析构 1、多继承与虚继承 多继承 class Furniture (int m) / \ class Bed (m) class Sofa (m) \ / class BedSofa (Bed::m、Sofa::m) 多继承 Bedsofa sb; sb.</description>
+    </item>
+    
+    <item>
+      <title>夯实基本功之C&#43;&#43;语言</title>
+      <link>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/07-%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%B4%BE%E7%94%9F/</link>
+      <pubDate>Thu, 06 Apr 2023 15:21:08 +0800</pubDate>
+      
+      <guid>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/07-%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%B4%BE%E7%94%9F/</guid>
+      <description>07继承与派生 追求：高内聚，低耦合（原类依赖其他类越少越好）
+1、类与类之间的关系 class A{ int a; } I B has A class B{ A a; // B中有A的对象 } II B use A class B{ void fun1(A &amp;amp;a); void fun2(); // B中有函数需要使用A的对象 } // 继承 III B is A class B : public A{ // B拥有A的全部成员变量、成员函数，且可以增加自己的内容 } 2、继承的基本定义 继承自父类的子类创建对象时，对象的空间与父类创建的对象内存空间不同。 简单继承eg</description>
+    </item>
+    
+    <item>
+      <title>夯实基本功之C&#43;&#43;语言</title>
+      <link>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/05-this%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD/</link>
+      <pubDate>Wed, 05 Apr 2023 10:21:08 +0800</pubDate>
+      
+      <guid>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/05-this%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD/</guid>
+      <description>05 this、友元函数与常用操作符重载 1、this指针 this就是指向调用该成员函数方法的非静态对象的地址
+this 指针不是const Test *，它是Test* const 用对象的get方法时，编译器翻译时会传入对象地址，进而可以直接找到 类的成员函数 尾部的const 修饰this指针，表示指针指向内容也不可修改 一般而言：this指针是一个对象的常指针，指向不可变，指向内容可改 class T { public: T(int a) { this-&amp;gt;m_a = a; } int get_a() const // 在类成员函数后+const，this指向内容也不可修改 this相当于： Test * const // 指向不可变，内容可变 { // this ++; // // this-&amp;gt;m_a = 10; return this-&amp;gt;m_a; } private: int m_a; }; 2、对象返回本身 静态成员函数只能访问静态数据成员。因为非静态成员函数，在调用this指针被当成参数传递，而静态成员函数属于类，不属于对象，所以没有this指针</description>
+    </item>
+    
+    <item>
+      <title>夯实基本功之C&#43;&#43;语言</title>
+      <link>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/04-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8%E4%B8%8Enewdeletestatic/</link>
+      <pubDate>Tue, 04 Apr 2023 15:21:08 +0800</pubDate>
+      
+      <guid>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/04-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8%E4%B8%8Enewdeletestatic/</guid>
+      <description>04、构造函数初始化列表与new、delete、static&amp;hellip; 1、构造函数初始化列表 class A { public: A(int a) { m_a = a; } ~A() { cout &amp;lt;&amp;lt; &amp;#34;析构&amp;#34; &amp;lt;&amp;lt; endl; } private: int m_a; } class B { public: B(A &amp;amp;a1, A &amp;amp;a2, int b) { m_b = b; // m_a1(a1); // 错误，此处将m_a1误当构造函数使用，实际上应该是 A m_a1(a1); 但是private中已经初始化过了a1 } private: int m_b; A a1; A a2; } // 该操作在C++中不被允许 // 所以需要构造函数的初始化列表 修改后的代码如下： B(A &amp;amp;a1, A &amp;amp;a2, int b): m_a1(a1), m_a2(a2) { m_b = b; } 上面是调用A中的析构: A m_a1(a1); = A m_a1 = a1; class A { public: A(int a) { cout &amp;lt;&amp;lt; &amp;#34;A 构造&amp;#34; &amp;lt;&amp;lt; endl; m_a = a; cout &amp;lt;&amp;lt; m_a &amp;lt;&amp;lt; endl; } void show() { cout &amp;lt;&amp;lt; m_a &amp;lt;&amp;lt; endl; } ~A() { cout &amp;lt;&amp;lt; &amp;#34;A 析构&amp;#34; &amp;lt;&amp;lt; endl; } private: int m_a; }; class B { public: B(A &amp;amp;a1, A &amp;amp;a2, int b) : m_a1(a1), m_a2(a2) { cout &amp;lt;&amp;lt; &amp;#34;B 构造&amp;#34; &amp;lt;&amp;lt; endl; m_b = b; } // 构造对象成员的顺序跟初始化列表的顺序无关 // 与成员对象的定义顺序有关 B(int a1, int a2, int b) : m_a1(a1), m_a2(a2) { cout &amp;lt;&amp;lt; &amp;#34;赋值&amp;#34; &amp;lt;&amp;lt; endl; m_b = b; } void showB() { cout &amp;lt;&amp;lt; &amp;#34;b = &amp;#34; &amp;lt;&amp;lt; m_b &amp;lt;&amp;lt; endl; m_a1.</description>
+    </item>
+    
+    <item>
+      <title>夯实基本功之C&#43;&#43;语言</title>
+      <link>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/03-%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%92%8C%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/</link>
+      <pubDate>Mon, 03 Apr 2023 15:21:08 +0800</pubDate>
+      
+      <guid>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/03-%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%92%8C%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/</guid>
+      <description>03 析构函数和深浅拷贝 1、构造和析构 创建一个对象之后，让对象立刻拥有你希望它具有的值 如果不用构造函数初始化，需要为每个类提供一个public的init函数，再对象创建后立即调用init函数进行初始化 缺点：init只是一个普通函数，必须显示调用 如果失误，对象没有初始化，那么结果将不确定，此外没有初始化的对象，内部成员变量的值是不缺定的。 此时需要引入构造函数，与类同名的没有返回值函数，可以被重载；析构不可以被重载 eg: class Test { Test(int a, int b) Test(int a) ~Test() }; main: Test t1(1); // 创建t1对象并初始化 ~Test() 析构函数，不允许有返回值与形参，在一个函数生命周期结束后OS会自动回收其所分配的栈区内存，但不会回收堆区内存，析构函数的作用是用户在该区域内回收前面分配的内存，防止内存泄漏。 2、默认的无参构造和析构函数 在用户没有显示提供任何构造函数的情况下，函数中存在默认的无参构造函数，可以直接调用Test t1 在用户没有显示提供任何析构函数的情况下，函数中也会有一个默认析构函数 3、拷贝构造函数 拷贝构造函数：用一个类对象来初始化另一个类对象 构造函数在创建新对象时使用 eg: Test t1; // 调用无参构造赋初值 Test t2(t1) // 用t1对象来为t2对象赋初值，这里就是拷贝构造函数 拷贝构造函数： // 用const将赋值变量保护起来 Test(const Test &amp;amp; another) { x = another.</description>
+    </item>
+    
+    <item>
+      <title>夯实基本功之C&#43;&#43;语言</title>
+      <link>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/06-%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7newdelete/</link>
+      <pubDate>Mon, 03 Apr 2023 15:21:08 +0800</pubDate>
+      
+      <guid>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/06-%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7newdelete/</guid>
+      <description>06 重载括号、new、delete 1、重载括号，可以把它当成仿函数（stl中常用）使用 仿函数(functor) ，就是使一个类的使用看上去像一个函数一样，其实现是类中实现一个operator()，这个类就有了类似函数的行为，即实现了一个仿函数类
+class: int operator()(int a1, int a2) { return a1 * a2; } 重载小括号，将对象当成普通函数调用，将这种对象称为：仿函数 main: int ans = a(1, 2); // a对象仿函数调用 也可以通过如下调用： int ans = a.</description>
+    </item>
+    
+    <item>
+      <title>夯实基本功之C&#43;&#43;语言</title>
+      <link>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/02-%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Sun, 02 Apr 2023 15:21:08 +0800</pubDate>
+      
+      <guid>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/02-%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0/</guid>
+      <description>1、内联函数 inline 函数与宏函数类似，不需要压栈出栈 宏函数的缺点：不会对传递形参进行检测，对累加类型(a++..)直接替换，可能与预期值不符 优点：预处理期展开，无压栈过程 #define MAX(a, b) \ ((a) &amp;gt; (b) ?</description>
+    </item>
+    
+    <item>
+      <title>夯实基本功之C&#43;&#43;语言</title>
+      <link>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/01-%E5%9F%BA%E7%A1%80%E5%BC%95%E7%94%A8/</link>
+      <pubDate>Fri, 31 Mar 2023 09:03:08 +0800</pubDate>
+      
+      <guid>https://github.com/HenryVVan/HenryVVan.github.io/post/c11/01-%E5%9F%BA%E7%A1%80%E5%BC%95%E7%94%A8/</guid>
+      <description>1、C++基础 namespace // 定义命名空间 namespace space_A { int a = 10; } { } &amp;#39;{}&amp;#39;包围的范围是其作用域 namespace可以嵌套，此外直接using 一个namespace时要注意不会引起歧义 嵌套命名空间时，对其他命名空间的引用要放在整体命名空间的最下面 // 命名空间代码 namespace space_a { namespace space_b { struct teacher { int id; char name[64]; }; } // namespace space_b using namespace space_b; } // 主函数代码 using namespace space_a; teacher t; t.</description>
     </item>
     
   </channel>

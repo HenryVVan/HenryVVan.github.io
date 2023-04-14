@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.111.3">
+
+  <title>夯实基本功之C&#43;&#43;语言 &middot; Henry&#39;s blog</title>
+
+    
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
+
+  
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+
+  <link rel="shortcut icon" href="https://github.com/HenryVVan/HenryVVan.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small></small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>夯实基本功之C&#43;&#43;语言</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>04 Apr 2023, 15:21</time>
+  </div>
+
+  
+
+  
+
+  
+
+</div>
+
+  <h2 id="04构造函数初始化列表与newdeletestatic">04、构造函数初始化列表与new、delete、static&hellip;</h2>
+<h2 id="1构造函数初始化列表">1、构造函数初始化列表</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">m_a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="o">~</span><span class="n">A</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;析构&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span> <span class="kt">int</span> <span class="n">m_a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="n">B</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span><span class="n">a1</span><span class="p">,</span> <span class="n">A</span> <span class="o">&amp;</span><span class="n">a2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">m_b</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// m_a1(a1); // 错误，此处将m_a1误当构造函数使用，实际上应该是 A m_a1(a1); 但是private中已经初始化过了a1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span> <span class="kt">int</span> <span class="n">m_b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">A</span> <span class="n">a1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">A</span> <span class="n">a2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 该操作在C++中不被允许
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 所以需要构造函数的初始化列表
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">修改后的代码如下：</span>
+</span></span><span class="line"><span class="cl"><span class="n">B</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span><span class="n">a1</span><span class="p">,</span> <span class="n">A</span> <span class="o">&amp;</span><span class="n">a2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span><span class="o">:</span> <span class="n">m_a1</span><span class="p">(</span><span class="n">a1</span><span class="p">),</span> <span class="n">m_a2</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">m_b</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">上面是调用</span><span class="n">A</span><span class="err">中的析构</span><span class="o">:</span> <span class="n">A</span> <span class="n">m_a1</span><span class="p">(</span><span class="n">a1</span><span class="p">);</span> <span class="o">=</span> <span class="n">A</span> <span class="n">m_a1</span> <span class="o">=</span> <span class="n">a1</span><span class="p">;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;A 构造&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;A 析构&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m_a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span><span class="n">a1</span><span class="p">,</span> <span class="n">A</span> <span class="o">&amp;</span><span class="n">a2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="o">:</span> <span class="n">m_a1</span><span class="p">(</span><span class="n">a1</span><span class="p">),</span> <span class="n">m_a2</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;B 构造&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_b</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 构造对象成员的顺序跟初始化列表的顺序无关
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 与成员对象的定义顺序有关
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">B</span><span class="p">(</span><span class="kt">int</span> <span class="n">a1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="o">:</span> <span class="n">m_a1</span><span class="p">(</span><span class="n">a1</span><span class="p">),</span> <span class="n">m_a2</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;赋值&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_b</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">showB</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;b = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">m_b</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_a1</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_a2</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">B</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;B 析构&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m_b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="n">m_a2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="n">m_a1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">test</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// A a1(1), a2(2);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">B</span> <span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">b</span><span class="p">.</span><span class="n">showB</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>构造对象成员初始化的顺序跟初始化列表的顺序无关</strong>
+<strong>与成员对象的定义顺序有关</strong></p>
+<p>进阶，一个类的多参数作函数初始化列表</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ABC</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ABC</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_b</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_c</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m_a</span><span class="p">,</span> <span class="n">m_b</span><span class="p">,</span> <span class="n">m_c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ABCD</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ABCD</span><span class="p">(</span><span class="kt">int</span> <span class="n">a1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span><span class="p">)</span> <span class="o">:</span> <span class="n">m_abc</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">c1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_d</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_d</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_abc</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m_d</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ABC</span> <span class="n">m_abc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">D</span><span class="err">类的初始化顺序，先</span><span class="n">m_d</span> <span class="err">后</span> <span class="n">m_abc</span>
+</span></span></code></pre></div><p>在类的private声明变量时，一定不能赋值，const int a（在类里不开空间，创建对象时才开）; 都不能在那赋值，需要在构造函数里赋值。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">常量赋值只能写在初始化列表里</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">x</span><span class="p">(</span><span class="kt">int</span> <span class="p">....</span> <span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="o">:</span><span class="n">x</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">只能写在初始化列表中，不可以写在函数里</span>
+</span></span></code></pre></div><h2 id="2在构造函数中调用构造函数是一个危险的行为">2、在构造函数中调用构造函数是一个危险的行为</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">T</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">T</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">a</span> <span class="o">=</span> <span class="n">m_a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">b</span> <span class="o">=</span> <span class="n">m_b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">c</span> <span class="o">=</span> <span class="n">m_c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">T</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_b</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">T</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span> <span class="c1">// 调用三形参的构造，会产生一个匿名的新对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="c1">// 匿名创建完没有载体，立刻被析构
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="nf">get_c</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">m_c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m_a</span><span class="p">,</span> <span class="n">m_b</span><span class="p">,</span> <span class="n">m_c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">main</span><span class="p">:</span> <span class="n">T</span> <span class="n">t1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="n">cout</span> <span class="o">&lt;&lt;</span>  <span class="n">t1</span><span class="p">.</span><span class="n">getc</span><span class="p">();</span> <span class="err">输出</span> <span class="mi">0</span><span class="err">，两参构造函数中创建的匿名对象没有载体，直接就被析构。</span>
+</span></span></code></pre></div><h2 id="3newdelete">3、new、delete</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">与</span><span class="n">C</span><span class="err">中的</span><span class="n">malloc</span><span class="err">、</span><span class="n">free</span><span class="err">类似</span>
+</span></span><span class="line"><span class="cl"><span class="err">但</span><span class="k">new</span><span class="err">、</span><span class="n">delete</span><span class="err">是关键字，不是函数</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// malloc 分配十个int空间给数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nl">malloc</span><span class="p">:</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">new</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 删完空间要记得指空
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">p</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// new 分配10个int空间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">// 支持[]、{}，不支持()
+</span></span></span><span class="line"><span class="cl"><span class="c1">// new int(10); 这个不是开辟空间， 是把那个int赋值为10
+</span></span></span><span class="line"><span class="cl"><span class="c1">// int a(10); == int a = 10; int 本身也是一个类
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">delete</span><span class="p">[]</span> <span class="n">p</span><span class="p">;</span> <span class="c1">// delete后面要加对应符号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">p</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><strong>new在堆上开辟空间时，可以触发对象的构造函数，而malloc不可以</strong></p>
+<p><strong>free 和 delete在成员不分配新内存时，可以互相混用，但不推荐</strong></p>
+<p><strong>free 不会触发析构函数， delete会触发</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 分配空间函数与C++中关键字的区别
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nl">eg1</span><span class="p">:</span><span class="k">new</span> <span class="err">在分配时可以触发构造函数，</span><span class="n">malloc</span><span class="err">不可以</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">t</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// int *p = new int[10];
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">T</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="o">-&gt;</span><span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">p</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">eg2</span><span class="p">:</span> <span class="k">delete</span> <span class="err">会触发析构，</span><span class="n">free</span><span class="err">不会（可能存在内存泄漏），且关键字会比函数调用效率稍微高一点</span>
+</span></span><span class="line"><span class="cl"><span class="n">T</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#34;wxy&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">在内存中分布</span>
+</span></span><span class="line"><span class="cl"><span class="err">栈</span>			<span class="err">堆</span>			<span class="err">堆</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">-&gt;</span>		<span class="mi">10</span>
+</span></span><span class="line"><span class="cl">			<span class="kt">char</span> <span class="o">*</span><span class="n">p</span>		 <span class="s">&#34;wxy&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="err">析构会释放</span><span class="kt">char</span> <span class="o">*</span><span class="err">所指向的内存</span>
+</span></span><span class="line"><span class="cl"><span class="err">然后</span><span class="n">delete</span><span class="err">可以触发析构，而</span><span class="n">free</span><span class="err">不会，他俩只能删除栈中对象所指向的内容，在这种情况下，使用</span><span class="n">free</span><span class="err">会造成内存泄漏。</span>
+</span></span></code></pre></div><h2 id="4静态成员变量和静态成员函数">4、静态成员变量和静态成员函数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 静态成员变量与静态成员函数都属于类，不属于具体对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">test</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">static</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">a</span> <span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">test</span><span class="p">();</span> <span class="o">-&gt;</span> <span class="mi">11</span>
+</span></span><span class="line"><span class="cl"><span class="n">test</span><span class="p">();</span> <span class="o">-&gt;</span> <span class="mi">12</span><span class="p">,</span> <span class="k">static</span> <span class="n">C</span><span class="err">中只初始化一次，静态变量区</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">static</span> <span class="kt">void</span> <span class="n">test</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="c1">// 该函数只在当前文件有效，在其他文件中不可以调用这个方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">T</span> 
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">static</span> <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="err">静态变量</span><span class="n">a</span><span class="err">是在静态区分配的，不属于某一对象，创建新对象时，不会为其再开辟空间，而</span><span class="n">b</span><span class="err">就会继续开空间</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">静态成员变量初始化，需要在类外如下赋值：</span><span class="kt">int</span> <span class="n">T</span><span class="o">::</span><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">注意静态成员变量</span><span class="n">static</span><span class="err">不是</span><span class="k">const</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 想返回局部变量，需要加上&amp;，将其变为左值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">static</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">get_c</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_c</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">m_c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    	<span class="kt">int</span> <span class="n">m_a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    	<span class="k">static</span> <span class="kt">int</span> <span class="n">m_c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="err">在类外先赋初值：</span><span class="kt">int</span> <span class="n">T</span><span class="o">::</span><span class="n">m_c</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">T</span> <span class="nf">t</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// t.get_c() = 3;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">T</span><span class="o">::</span><span class="n">get_c</span><span class="p">()</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// cout &lt;&lt; t.get_c() &lt;&lt; endl;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">T</span><span class="o">::</span><span class="n">get_c</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span> <span class="c1">// 4
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span></code></pre></div><h2 id="5static练习">5、static练习</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="mi">1</span><span class="err">、</span><span class="k">static</span> <span class="err">成员变量实现了同类对象间信息共享</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2</span><span class="err">、</span><span class="k">static</span> <span class="err">成员是在类外存储，不计算在类的大小里，一开始就在常量区为其开辟了空间</span>
+</span></span><span class="line"><span class="cl"><span class="mi">3</span><span class="err">、</span><span class="k">static</span> <span class="err">成员是命名空间，属于类的全局变量，存储在</span><span class="n">data</span><span class="err">区</span>
+</span></span><span class="line"><span class="cl"><span class="mi">4</span><span class="err">、</span><span class="k">static</span> <span class="err">成员只能类外初始化</span>
+</span></span><span class="line"><span class="cl"><span class="mi">5</span><span class="err">、可以通过类名直接访问（不生成对象也可），也可以通过对象去访问</span>
+</span></span></code></pre></div><p><strong>统计学生人数与均分</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">test</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">T</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">T</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">get_c</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_c</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">m_c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m_a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">int</span> <span class="n">m_c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">T</span><span class="o">::</span><span class="n">m_c</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Student</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Student</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="kt">double</span> <span class="n">score</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">s_score</span> <span class="o">+=</span> <span class="n">score</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">m_num</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">int</span> <span class="nf">num</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">m_num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">double</span> <span class="nf">score</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">s_score</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">m_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">int</span> <span class="n">m_num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">double</span> <span class="n">s_score</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">Student</span><span class="o">::</span><span class="n">m_num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span> <span class="n">Student</span><span class="o">::</span><span class="n">s_score</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Student</span> <span class="n">s1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">70</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Student</span> <span class="n">s2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">90</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Student</span> <span class="n">s3</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">Student</span><span class="o">::</span><span class="n">num</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">Student</span><span class="o">::</span><span class="n">score</span><span class="p">()</span> <span class="o">/</span> <span class="n">Student</span><span class="o">::</span><span class="n">num</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="6static占用大小">6、static占用大小</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">类的大小 只有 普通成员变量有关，与函数，静态成员变量均无关
+</span></span><span class="line"><span class="cl">函数也不属于对象
+</span></span><span class="line"><span class="cl">class C:
+</span></span><span class="line"><span class="cl">	get() // 不占内存，不属于对象
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">main: 
+</span></span><span class="line"><span class="cl">	C c1, c2;
+</span></span><span class="line"><span class="cl">	c1.get(); c2.get(); // 为什么可以get到对应的值
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	c1 占的内存				c2 占的内存
+</span></span><span class="line"><span class="cl">				
+</span></span><span class="line"><span class="cl">				get()：与他俩无关
+</span></span><span class="line"><span class="cl">	
+</span></span></code></pre></div>
+  
+  <h4><i class="fas fa-share-alt" aria-hidden="true"></i>&nbsp;Share!</h4>
+<ul class="share-buttons">
+	<li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f04-%25E6%259E%2584%25E9%2580%25A0%25E5%2587%25BD%25E6%2595%25B0%25E5%2588%259D%25E5%25A7%258B%25E5%258C%2596%25E5%2588%2597%25E8%25A1%25A8%25E4%25B8%258Enewdeletestatic%2f" target="_blank" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span class="sr-only">Share on Facebook</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://twitter.com/intent/tweet?source=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f04-%25E6%259E%2584%25E9%2580%25A0%25E5%2587%25BD%25E6%2595%25B0%25E5%2588%259D%25E5%25A7%258B%25E5%258C%2596%25E5%2588%2597%25E8%25A1%25A8%25E4%25B8%258Enewdeletestatic%2f" target="_blank" title="Tweet"><i class="fab fa-twitter" aria-hidden="true"></i><span class="sr-only">Tweet</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://plus.google.com/share?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f04-%25E6%259E%2584%25E9%2580%25A0%25E5%2587%25BD%25E6%2595%25B0%25E5%2588%259D%25E5%25A7%258B%25E5%258C%2596%25E5%2588%2597%25E8%25A1%25A8%25E4%25B8%258Enewdeletestatic%2f" target="_blank" title="Share on Google+"><i class="fab fa-google-plus" aria-hidden="true"></i><span class="sr-only">Share on Google+</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.tumblr.com/share?v=3&u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f04-%25E6%259E%2584%25E9%2580%25A0%25E5%2587%25BD%25E6%2595%25B0%25E5%2588%259D%25E5%25A7%258B%25E5%258C%2596%25E5%2588%2597%25E8%25A1%25A8%25E4%25B8%258Enewdeletestatic%2f" target="_blank" title="Post to Tumblr"><i class="fab fa-tumblr" aria-hidden="true"></i><span class="sr-only">Post to Tumblr</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f04-%25E6%259E%2584%25E9%2580%25A0%25E5%2587%25BD%25E6%2595%25B0%25E5%2588%259D%25E5%25A7%258B%25E5%258C%2596%25E5%2588%2597%25E8%25A1%25A8%25E4%25B8%258Enewdeletestatic%2f" target="_blank" title="Pin it"><i class="fab fa-pinterest-p" aria-hidden="true"></i><span class="sr-only">Pin it</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.reddit.com/submit?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f04-%25E6%259E%2584%25E9%2580%25A0%25E5%2587%25BD%25E6%2595%25B0%25E5%2588%259D%25E5%25A7%258B%25E5%258C%2596%25E5%2588%2597%25E8%25A1%25A8%25E4%25B8%258Enewdeletestatic%2f" target="_blank" title="Submit to Reddit"><i class="fab fa-reddit-alien" aria-hidden="true"></i><span class="sr-only">Submit to Reddit</span></a>
+	</li>
+</ul>
+
+
+<style>
+	ul.share-buttons{
+	  list-style: none;
+	  padding: 0;
+	}
+
+	ul.share-buttons li{
+	  display: inline;
+	}
+
+	ul.share-buttons .sr-only{
+	  position: absolute;
+	  clip: rect(1px 1px 1px 1px);
+	  clip: rect(1px, 1px, 1px, 1px);
+	  padding: 0;
+	  border: 0;
+	  height: 1px;
+	  width: 1px;
+	  overflow: hidden;
+	}
+</style>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/03-%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%92%8C%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/03-%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%92%8C%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/05-this%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/05-this%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/ui.js"></script>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/menus.js"></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.111.3">
+
+  <title>夯实基本功之C&#43;&#43;语言 &middot; Henry&#39;s blog</title>
+
+    
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
+
+  
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+
+  <link rel="shortcut icon" href="https://github.com/HenryVVan/HenryVVan.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small></small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>夯实基本功之C&#43;&#43;语言</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>10 Apr 2023, 13:40</time>
+  </div>
+
+  
+
+  
+
+  
+
+</div>
+
+  <h1 id="8多继承虚继承多态虚析构">8、多继承、虚继承、多态、虚析构</h1>
+<h2 id="1多继承与虚继承">1、多继承与虚继承</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">多继承</span>
+</span></span><span class="line"><span class="cl">				<span class="k">class</span> <span class="nc">Furniture</span> <span class="p">(</span><span class="kt">int</span> <span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="o">/</span>                 <span class="err">\</span>  
+</span></span><span class="line"><span class="cl">         <span class="k">class</span> <span class="nc">Bed</span> <span class="p">(</span><span class="n">m</span><span class="p">)</span>      <span class="k">class</span> <span class="nc">Sofa</span> <span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="err">\</span>                <span class="o">/</span>
+</span></span><span class="line"><span class="cl">      			  <span class="k">class</span> <span class="nc">BedSofa</span> <span class="p">(</span><span class="n">Bed</span><span class="o">::</span><span class="n">m</span><span class="err">、</span><span class="n">Sofa</span><span class="o">::</span><span class="n">m</span><span class="p">)</span> <span class="err">多继承</span>
+</span></span><span class="line"><span class="cl">    					<span class="n">Bedsofa</span> <span class="n">sb</span><span class="p">;</span> <span class="n">sb</span><span class="p">.</span><span class="n">m</span> <span class="err">不知道找哪个</span><span class="n">m</span><span class="err">，应该指定具体的类中的</span><span class="n">m</span>
+</span></span><span class="line"><span class="cl">		<span class="err">为了防止孙类在继承其父类时，将其祖类中的变量拷贝多份，进而出现指代不明的现象，在其父类继承祖类的时候，需在继承方式前</span><span class="o">+</span><span class="err">关键字“</span><span class="k">virtual</span><span class="err">”</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">eg</span> <span class="k">class</span> <span class="nc">Bed</span> <span class="o">:</span> <span class="k">virtual</span> <span class="k">public</span> <span class="n">Furniture</span>
+</span></span><span class="line"><span class="cl">        <span class="err">当孙类发现，父类中是虚继承祖类时，同一变量只会直接从祖类中拷贝一份，不会再多继承多份。</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">                            
+</span></span><span class="line"><span class="cl"><span class="err">虚继承</span>
+</span></span><span class="line"><span class="cl">              <span class="k">class</span> <span class="nc">Furniture</span> <span class="p">(</span><span class="kt">int</span> <span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">              <span class="o">/</span>                 <span class="err">\</span>  
+</span></span><span class="line"><span class="cl">       <span class="k">virtual</span> <span class="k">class</span> <span class="nc">Bed</span> <span class="p">(</span><span class="n">m</span><span class="p">)</span>    <span class="k">virtual</span> <span class="k">class</span> <span class="nc">Sofa</span> <span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">               <span class="err">\</span>                <span class="o">/</span>
+</span></span><span class="line"><span class="cl">      	    <span class="k">class</span> <span class="nc">BedSofa</span> <span class="p">(</span><span class="n">Bed</span><span class="p">.</span><span class="n">m</span><span class="p">)</span> <span class="err">直接继承自祖类</span>
+</span></span><span class="line"><span class="cl">                <span class="err">若父类有非继承于祖类的成员，也会被孙类继承</span>
+</span></span></code></pre></div><h2 id="2多态的定义和多态的三个必要条件">2、多态的定义和多态的三个必要条件</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">C</span><span class="o">++</span><span class="err">多态</span><span class="p">(</span><span class="n">polymorphism</span><span class="p">)</span><span class="err">指的是：由继承产生的相关的不同的类，其对象对同一消息会作出不同的相应。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span><span class="p">(</span><span class="n">string</span> <span class="n">kongfu</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">kongfu</span> <span class="o">=</span> <span class="n">kongfu</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;A &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">kongfu</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">kongfu</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span><span class="p">(</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span> <span class="o">:</span> <span class="n">A</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;B &#34;</span> <span class="o">&lt;&lt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">kongfu</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 可以用父类指针指向子类对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="n">A</span> <span class="o">*</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;  &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">kongfu</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">实现多态需要有三个条件：</span>
+</span></span><span class="line"><span class="cl">    <span class="err">①</span> <span class="err">要有继承</span>
+</span></span><span class="line"><span class="cl">    <span class="err">②</span> <span class="err">要有虚函数重写（最好在子类中也加上这个关键字，虽没有意义，但可以加强可读性）</span> <span class="err">（现在编译器已经优化完，会根据传入基类的类型来调用相应类中的函数）</span>
+</span></span><span class="line"><span class="cl">    <span class="err">③</span> <span class="err">要有父类指针或引用</span> <span class="err">指向</span> <span class="err">子类对象</span>
+</span></span></code></pre></div><p><strong>多态的意义：之前的架构，可以被未来继续拓展</strong></p>
+<h2 id="3多态的意义">3、多态的意义</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Wxy</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">int</span> <span class="n">score</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Wh</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Wxy</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">int</span> <span class="n">score</span><span class="p">()</span> <span class="c1">// 将需要使用多态的函数前+virtual
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">99</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 继承Wh类，将score进行虚函数重写
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Wh1</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Wh</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">int</span> <span class="n">score</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">101</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">comapre</span><span class="p">(</span><span class="n">Wxy</span> <span class="o">&amp;</span><span class="n">wxy</span><span class="p">,</span> <span class="n">Wh</span> <span class="o">&amp;</span><span class="n">wh</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">wxy</span><span class="p">.</span><span class="n">score</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">wh</span><span class="p">.</span><span class="n">score</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;wxy win&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;wh win&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">Main</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Wh</span> <span class="n">wh</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Wxy</span> <span class="n">wxy</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Wh1</span> <span class="n">wh1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comapre</span><span class="p">(</span><span class="n">wxy</span><span class="p">,</span> <span class="n">wh1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comapre</span><span class="p">(</span><span class="n">wxy</span><span class="p">,</span> <span class="n">wh</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">Res</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">wh</span> <span class="n">win</span>
+</span></span><span class="line"><span class="cl">	<span class="n">wxy</span> <span class="n">win</span>
+</span></span></code></pre></div><h2 id="4动态联编和静态联编">4、动态联编和静态联编</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1、联编是：程序模块、代码之间互相关联的过程
+</span></span><span class="line"><span class="cl">2、静态联编：指程序的匹配、连接在编译阶段完成，也称为：早期匹配。重载函数使用静态联编。
+</span></span><span class="line"><span class="cl">3、动态联编：动态联编是指程序联编推迟到运行时进行，所以又叫晚期联编（迟绑定），switch语句、if语句、多态（虚函数重写）都是动态联编
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1、C++与C都属于静态编译型语言
+</span></span><span class="line"><span class="cl">2、在编译时，编译器自动根据指针的类型判断指向的是一个什么样的对象，所以编译器会认为父类指针指的是父类对象
+</span></span><span class="line"><span class="cl">3、由于程序没有运行，所以不可能知道父类指针指的是父类还是子类对象，出于安全的考虑，编译器会假定父类指针只指向父类对象，这种特性就是静态联编
+</span></span><span class="line"><span class="cl">4、多态的发生是动态联编，是在程序执行的时候去判断父类指针应该调用的方法
+</span></span></code></pre></div><h2 id="5虚析构函数">5、虚析构函数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="n">A</span> <span class="n">a</span><span class="p">;</span>	<span class="n">B</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="err">在</span><span class="n">B</span><span class="err">的构造函数发生作用前，默认先调</span><span class="n">A</span><span class="err">的构造函数</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">创建类成员指针时，不可悬空指针（不可如</span><span class="n">eg</span><span class="err">：</span><span class="n">A</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span><span class="err">）</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;A()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="n">memset</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">strcpy</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span> <span class="s">&#34;A()&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;A&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;~A()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">delete</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;B()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="n">memset</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">strcpy</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">,</span> <span class="s">&#34;B()&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;B&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">B</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;~B()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">delete</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">this</span><span class="o">-&gt;</span><span class="n">p</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fun</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">t</span><span class="p">(</span><span class="n">A</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="c1">// 要用到多态的是print函数，所以要在基类中 + 上virtual
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">p</span><span class="o">-&gt;</span><span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">B</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">B</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">test</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="err">执行结果，如下</span>
+</span></span><span class="line"><span class="cl">            <span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">B</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">B</span>
+</span></span><span class="line"><span class="cl">            <span class="o">~</span><span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="err">只会除非</span><span class="n">A</span><span class="err">的析构，会造成内存泄漏，因为在一开始触发</span><span class="n">B</span><span class="err">的构造函数的时候，会先触发其基类的构造函数，在堆上开辟了一块子类无法访问的空间，最后析构时，只将其释放，未将后面</span><span class="n">B</span><span class="err">所用空间释放，造成了内存泄漏。</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">a</span><span class="err">（栈）</span>		    <span class="err">堆</span>
+</span></span><span class="line"><span class="cl">	<span class="o">*</span><span class="n">p</span>  <span class="o">----------&gt;</span>   <span class="kt">char</span><span class="p">[</span><span class="mi">64</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	 <span class="n">b</span>  
+</span></span><span class="line"><span class="cl">	<span class="o">*</span><span class="n">p</span>  <span class="o">----------&gt;</span>   <span class="kt">char</span><span class="p">[</span><span class="mi">64</span><span class="p">]</span> <span class="c1">// A中构造函数的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					  <span class="kt">char</span><span class="p">[</span><span class="mi">64</span><span class="p">]</span>  <span class="n">B</span><span class="err">构造函数产生的，也需要析构</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="err">所以需要将父类的析构函数前也加上关键字</span><span class="s">&#34;virtual“</span>
+</span></span><span class="line"><span class="cl">    <span class="err">因为析构的顺序与构造相反，触发了</span><span class="n">B</span><span class="err">析构，之后一定会触发</span><span class="n">A</span><span class="err">析构</span>
+</span></span><span class="line"><span class="cl">    <span class="err">触发</span><span class="n">B</span><span class="err">构造，在此之前一定会触发</span><span class="n">A</span><span class="err">构造</span>
+</span></span></code></pre></div><h2 id="6重载重写重定义">6、重载、重写、重定义</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">重载：一定在一个作用域内，函数的形参列表不同
+</span></span><span class="line"><span class="cl">重定义：
+</span></span><span class="line"><span class="cl">    发生在两个不同的类中，（不加virtual的普通函数）一个是父类，一个是子类
+</span></span><span class="line"><span class="cl">    重写： 父类是虚函数，子类与其一模一样，发生多态
+</span></span></code></pre></div><h2 id="7多态的原理">7、多态的原理</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Parent</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">show</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Child</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Parent</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">int</span> <span class="nf">show</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">在一个父类中，用</span><span class="k">virtual</span> <span class="err">声明一个虚函数，不管这个类是否能被继承，都会为其开辟一张虚函数表（存放在常量区），有几个虚函数会加几项。</span>
+</span></span><span class="line"><span class="cl"><span class="err">若该父类被子类继承，那么会为子类也开辟一张虚函数表。</span>
+</span></span><span class="line"><span class="cl"><span class="err">若一个类有“</span><span class="k">virtual</span><span class="err">”虚函数关键字，在编译器给该对象开辟空间的时候，会默认增加一个指针”</span><span class="n">vptr</span><span class="err">“（用</span><span class="n">sizeof</span><span class="err">统计时会占类中大小），该指针始终指向该类的虚函数表。</span>
+</span></span><span class="line"><span class="cl"><span class="err">开辟空间时</span><span class="nl">eg</span><span class="p">:</span>					   <span class="o">&gt;</span>   <span class="n">Child</span><span class="o">::</span><span class="err">虚函数表</span> 
+</span></span><span class="line"><span class="cl">	<span class="n">Child</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>   <span class="o">-&gt;</span>		<span class="n">vptr</span>	<span class="o">/</span>	  <span class="k">virtual</span> <span class="kt">int</span> <span class="n">Child</span><span class="o">::</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        		     	 <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Parent</span> <span class="err">同上</span>
+</span></span><span class="line"><span class="cl"><span class="n">Child</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Parent</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">;</span>    
+</span></span><span class="line"><span class="cl"><span class="n">p</span><span class="err">会指向子类的虚函数表的</span><span class="n">vptr</span><span class="err">，然后通过偏移去找子类中有无满足调用条件的方法，若无的话则去父类中查找，若还是无，则报错。</span>
+</span></span></code></pre></div><h3 id="71-虚函数表和vptr指针">7.1 虚函数表和<code>vptr</code>指针</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">① 当类中声明虚函数时，编译器会在类中生成一个虚函数表
+</span></span><span class="line"><span class="cl">② 虚函数表是一个存储类成员函数指针的数据结构
+</span></span><span class="line"><span class="cl">③ 虚函数表是由编译器自动生成与维护的
+</span></span><span class="line"><span class="cl">④ virtual成员函数会被编译器放入虚函数表中
+</span></span><span class="line"><span class="cl">⑤ 存在虚函数时，每个对象中都有一个指向虚函数表的指针（vptr指针）
+</span></span></code></pre></div><p>如果调用一个普通函数，编译器不会去查虚函数表（eg，父类中的函数未声明为虚函数，仅在子类中声明）</p>
+<p><em><font color="red">注意：</font></em></p>
+<p>1、通过虚函数表指针<code>vptr</code>调用重写函数是在程序运行时进行的，因此需要通过寻址操作才能确定真正应该调用的函数（动态联编），而普通成员函数是编译时就确定了调用的函数，因而在效率上，<font color = "red">虚函数的效率要低很多。</font></p>
+<p>2、出于效率考虑，没有必要将所有成员函数都声明为虚函数。</p>
+<p>3、C++编译器，执行run函数，不需要区分是子类对象还是父类对象，而是直接通过p的<code>vptr</code>指针所指向的对象函数执行即可。</p>
+<h3 id="72-验证vptr指针的存在">7.2 验证<code>vptr</code>指针的存在</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">pub</span><span class="p">:</span> <span class="kt">void</span> <span class="n">A</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">pvt</span><span class="p">:</span> <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  	<span class="nl">pub</span><span class="p">:</span> <span class="kt">void</span> <span class="n">B</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">pvt</span><span class="p">:</span> <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="err">求</span><span class="k">sizeof</span><span class="err">：</span><span class="mi">4</span>	<span class="mi">4</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">C</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  	<span class="nl">pub</span><span class="p">:</span> <span class="k">virtual</span> <span class="n">C</span><span class="p">()</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">pvt</span><span class="p">:</span> <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="err">求</span><span class="k">sizeof</span><span class="err">：</span><span class="mi">8</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">D</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  	<span class="nl">pub</span><span class="p">:</span> <span class="k">virtual</span> <span class="n">D</span><span class="p">()</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">    	 <span class="k">virtual</span> <span class="nf">X</span><span class="p">()</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">pvt</span><span class="p">:</span> <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="err">求</span><span class="k">sizeof</span><span class="err">：</span><span class="mi">8</span> <span class="err">只需要一个虚函数指针，其余只需要往里面填数据即可，此外，求</span><span class="n">size</span><span class="err">时需要对齐</span>
+</span></span></code></pre></div><h3 id="73--vptr指针分布初始化"><strong>7.3  <code>vptr</code>指针分布初始化</strong></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">注意：构造函数中最好不要写业务，有时会有意料之外的事情发生，写成员的初始化即可。
+</span></span></code></pre></div><p><strong>探究1</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;A()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; A &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="o">:</span> <span class="n">A</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;B()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;B &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">test</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">delete</span> <span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">输出：</span>
+</span></span><span class="line"><span class="cl">	<span class="n">A</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="n">A</span>
+</span></span><span class="line"><span class="cl">	<span class="n">B</span><span class="p">()</span>
+</span></span></code></pre></div><p>在B的构造函数触发前，会先触发A的构造函数，这时候会在子对象中先创建[<code>vptr</code>、a]的空间（当成父类对象解析），然后此时的<code>vptr</code>指向父类的虚函数表，会继续执行A构造函数中的函数，在父类对象构造完成后，会将对象当成解析，后续<code>vptr</code>指针会指向子类的虚函数表。</p>
+<p><strong>结论：<code>vptr</code>指针是分布初始化的，在构造函数中不要写业务</strong></p>
+<h3 id="74-父类指针和子类指针的步长">7.4 父类指针和子类指针的步长</h3>
+<p>指针<code>++</code>，并不是<code>+1</code>，而是跨步相加</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="o">:</span> <span class="n">A</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">test</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#if 0</span><span class="c">
+</span></span></span><span class="line"><span class="cl"><span class="c">    A *p = new B(1, 2);
+</span></span></span><span class="line"><span class="cl"><span class="c">    // p-&gt;print();
+</span></span></span><span class="line"><span class="cl"><span class="c">    delete p;
+</span></span></span><span class="line"><span class="cl"><span class="c"></span><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="n">B</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">B</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">B</span><span class="p">(</span><span class="mi">2</span><span class="p">)};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">p</span><span class="o">-&gt;</span><span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">p</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p><code>A *p = &amp;arr[0];</code></p>
+<p><code>p ++ </code>每次等于 <code>p += sizeof(A),</code> 父类指针偏移之后会出错。</p>
+<p><code>B *p = &amp;arr[0];</code></p>
+<p><code>p ++ </code>每次等于 <code>p += sizeof(B)</code></p>
+<h3 id="75-纯虚函数和抽象类">7.5 纯虚函数和抽象类</h3>
+<p><strong>如果一个类有纯虚函数，不管他有没有成员变量，那么就称这个类是抽象类</strong></p>
+<p><strong>一个普通类想继承抽象类，必须要重写纯虚函数</strong></p>
+<p>同一个接口，利用多态可以实现不同业务</p>
+<p>抽象类可以将main函数跟具体实现做一个隔离（解耦合）</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">virtual</span> <span class="kt">double</span> <span class="nf">getArea</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Shape</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 纯虚函数，该类中无论是否有成员变量，该类都为抽象类
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">virtual</span> <span class="kt">double</span> <span class="n">getArea</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Circle</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Shape</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Circle</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">double</span> <span class="nf">getArea</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;圆&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Square</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Shape</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Square</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">double</span> <span class="nf">getArea</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;正方形&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="n">Shape</span> <span class="o">*</span> <span class="n">sp</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">sp</span><span class="o">-&gt;</span><span class="n">getarea</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">test</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Shape</span> <span class="o">*</span><span class="n">sp1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Circle</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">sp1</span><span class="o">-&gt;</span><span class="n">getArea</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Shape</span> <span class="o">*</span><span class="n">sp2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Square</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">sp2</span><span class="o">-&gt;</span><span class="n">getArea</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="err">依赖倒转模式</span>
+</span></span></code></pre></div><p>后续若要增加一个求三角形面积，可以不用修改现有代码，做到了main与具体业务的隔离，解耦合。</p>
+<p>此处的main只与Shape相关，若不使用多态，main会与每个类相关，耦合度高，不好，应修改为面向抽象类编程。</p>
+<p><strong>此外，注意：纯虚函数的类不能用来实例化对象，若想实例化，必须要重新该父类中的所有的纯虚函数</strong></p>
+<h3 id="76-纯虚函数与多继承">7.6 纯虚函数与多继承</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">implt1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="nl">pub</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">fun1</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">fun3</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">implt2</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">fun2</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Child</span> <span class="o">:</span> <span class="k">public</span> <span class="n">impl1</span><span class="p">,</span> <span class="k">public</span> <span class="n">impl2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">fun1</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">fun2</span><span class="p">()</span> <span class="p">{}</span> 
+</span></span><span class="line"><span class="cl">	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">fun3</span><span class="p">()</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">main</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">implt1</span> <span class="o">*</span><span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Child</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">p1</span><span class="err">只可以使用</span><span class="n">implt1</span><span class="err">中的方法，不可以调用</span><span class="n">implt2</span><span class="err">中的方法，反之亦然。对</span><span class="n">p1</span><span class="err">而言。</span><span class="n">implt2</span><span class="err">中的内容不可见。</span>
+</span></span></code></pre></div><h3 id="77-面向抽象类编程-例子">7.7 面向抽象类编程-例子</h3>
+<p>一个类中最好只有一个纯虚函数，便于拓展。</p>
+<p>如果一个类中有多个纯虚函数，那么在继承拓展时，需要同时维护三个函数</p>
+<p><strong>注意：纯虚函数只需要有声明，不需要有定义（构造函数）</strong></p>
+<h2 id="8函数指针">8、函数指针</h2>
+<h3 id="81函数指针的语法和意义">8.1函数指针的语法和意义</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">func</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;func&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 推荐函数指针写法 1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="nf">int</span><span class="p">(</span><span class="n">FUNC</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">FUNC</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">fp</span> <span class="o">=</span> <span class="n">func</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">fp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// 等价于 (*fp)(1, 2);
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 推荐函数指针写法 2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="n">fp1</span><span class="p">)(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">fp1</span> <span class="o">=</span> <span class="n">func</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">fp1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span></code></pre></div><p>用函数指针实现多态（架构函数）</p>
+
+  
+  <h4><i class="fas fa-share-alt" aria-hidden="true"></i>&nbsp;Share!</h4>
+<ul class="share-buttons">
+	<li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f08-%25E5%25A4%259A%25E7%25BB%25A7%25E6%2589%25BF%25E8%2599%259A%25E7%25BB%25A7%25E6%2589%25BF%25E5%25A4%259A%25E6%2580%2581%25E8%2599%259A%25E6%259E%2590%25E6%259E%2584%2f" target="_blank" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span class="sr-only">Share on Facebook</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://twitter.com/intent/tweet?source=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f08-%25E5%25A4%259A%25E7%25BB%25A7%25E6%2589%25BF%25E8%2599%259A%25E7%25BB%25A7%25E6%2589%25BF%25E5%25A4%259A%25E6%2580%2581%25E8%2599%259A%25E6%259E%2590%25E6%259E%2584%2f" target="_blank" title="Tweet"><i class="fab fa-twitter" aria-hidden="true"></i><span class="sr-only">Tweet</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://plus.google.com/share?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f08-%25E5%25A4%259A%25E7%25BB%25A7%25E6%2589%25BF%25E8%2599%259A%25E7%25BB%25A7%25E6%2589%25BF%25E5%25A4%259A%25E6%2580%2581%25E8%2599%259A%25E6%259E%2590%25E6%259E%2584%2f" target="_blank" title="Share on Google+"><i class="fab fa-google-plus" aria-hidden="true"></i><span class="sr-only">Share on Google+</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.tumblr.com/share?v=3&u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f08-%25E5%25A4%259A%25E7%25BB%25A7%25E6%2589%25BF%25E8%2599%259A%25E7%25BB%25A7%25E6%2589%25BF%25E5%25A4%259A%25E6%2580%2581%25E8%2599%259A%25E6%259E%2590%25E6%259E%2584%2f" target="_blank" title="Post to Tumblr"><i class="fab fa-tumblr" aria-hidden="true"></i><span class="sr-only">Post to Tumblr</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f08-%25E5%25A4%259A%25E7%25BB%25A7%25E6%2589%25BF%25E8%2599%259A%25E7%25BB%25A7%25E6%2589%25BF%25E5%25A4%259A%25E6%2580%2581%25E8%2599%259A%25E6%259E%2590%25E6%259E%2584%2f" target="_blank" title="Pin it"><i class="fab fa-pinterest-p" aria-hidden="true"></i><span class="sr-only">Pin it</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.reddit.com/submit?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f08-%25E5%25A4%259A%25E7%25BB%25A7%25E6%2589%25BF%25E8%2599%259A%25E7%25BB%25A7%25E6%2589%25BF%25E5%25A4%259A%25E6%2580%2581%25E8%2599%259A%25E6%259E%2590%25E6%259E%2584%2f" target="_blank" title="Submit to Reddit"><i class="fab fa-reddit-alien" aria-hidden="true"></i><span class="sr-only">Submit to Reddit</span></a>
+	</li>
+</ul>
+
+
+<style>
+	ul.share-buttons{
+	  list-style: none;
+	  padding: 0;
+	}
+
+	ul.share-buttons li{
+	  display: inline;
+	}
+
+	ul.share-buttons .sr-only{
+	  position: absolute;
+	  clip: rect(1px 1px 1px 1px);
+	  clip: rect(1px, 1px, 1px, 1px);
+	  padding: 0;
+	  border: 0;
+	  height: 1px;
+	  width: 1px;
+	  overflow: hidden;
+	}
+</style>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/07-%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%B4%BE%E7%94%9F/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/07-%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%B4%BE%E7%94%9F/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/%E7%AE%97%E6%B3%95%E5%85%A5%E9%97%A8/0-dp%E6%A6%82%E8%AE%BA/">深入剖析常用算法与数据结构</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/%E7%AE%97%E6%B3%95%E5%85%A5%E9%97%A8/0-dp%E6%A6%82%E8%AE%BA/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/ui.js"></script>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/menus.js"></script>
+
+
+
+
+
+
+
+
+<script src="/js/math-code.js"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+</body>
+</html>
+

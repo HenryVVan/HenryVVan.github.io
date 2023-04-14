@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.111.3">
+
+  <title>夯实基本功之C&#43;&#43;语言 &middot; Henry&#39;s blog</title>
+
+    
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
+
+  
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+
+  <link rel="shortcut icon" href="https://github.com/HenryVVan/HenryVVan.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small></small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>夯实基本功之C&#43;&#43;语言</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>02 Apr 2023, 15:21</time>
+  </div>
+
+  
+
+  
+
+  
+
+</div>
+
+  <h2 id="1内联函数">1、内联函数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kr">inline</span> <span class="err">函数与宏函数类似，不需要压栈出栈</span>
+</span></span><span class="line"><span class="cl"><span class="err">宏函数的缺点：不会对传递形参进行检测，对累加类型</span><span class="p">(</span><span class="n">a</span><span class="o">++</span><span class="p">..)</span><span class="err">直接替换，可能与预期值不符</span> 
+</span></span><span class="line"><span class="cl"><span class="err">优点：预处理期展开，无压栈过程</span>    
+</span></span><span class="line"><span class="cl"><span class="cp">#define MAX(a, b) \
+</span></span></span><span class="line"><span class="cl"><span class="cp">    ((a) &gt; (b) ? (a) : (b))
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>    
+</span></span><span class="line"><span class="cl"><span class="err">省去函数调用时：出入栈、跳转、返回的开销</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// inline 传a++时会先传入再++，与预期保持一致
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">inline</span> <span class="kt">void</span> <span class="n">print</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="o">?</span> <span class="nl">a</span> <span class="p">:</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">定义为</span><span class="n">inline</span><span class="err">后</span> <span class="err">由编译器直接展开，省去压栈出栈</span>
+</span></span><span class="line"><span class="cl"><span class="kr">inline</span> <span class="err">适合</span> <span class="err">代码比较少的来节省开销</span>
+</span></span><span class="line"><span class="cl"><span class="err">①</span> <span class="err">不能存在任何的循环语句</span>
+</span></span><span class="line"><span class="cl"><span class="err">②</span> <span class="err">不能存在过多的判断</span>
+</span></span><span class="line"><span class="cl"><span class="err">③</span> <span class="err">函数体不能太大</span>
+</span></span><span class="line"><span class="cl"><span class="err">④</span> <span class="err">不能对函数进行取地址操作</span>
+</span></span><span class="line"><span class="cl"><span class="err">⑤</span> <span class="err">内联声明必须在函数调用之前</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">代价：</span> <span class="err">由于内联函数的函数体在代码段中会出现多个“副本”，因此会增加代码段空间。</span>
+</span></span><span class="line"><span class="cl"><span class="err">本质上是牺牲代码段空间换程序运行效率，故只适合将函数体很小但被频繁调用的函数声明为</span><span class="n">inline</span><span class="err">类型</span>
+</span></span></code></pre></div><h2 id="2函数默认参数和占位参数">2、函数默认参数和占位参数</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">C</span><span class="o">++</span><span class="err">中默认参数必须是从右往左赋值的</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">默认参数在重载时，编译器不知道匹配哪一个。（默认参数位可以不用赋值）</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">getValue</span><span class="p">(</span><span class="kt">int</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">hei</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">该函数中高度默认值为</span><span class="mi">1</span><span class="err">，如果用户为其传参则使用用户传入值，若用户不传则使用默认值</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">占位参数：（是设计时的一个“坑”）</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">fun</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="c1">// 操作重载时的哑元 函数原型 void fun(int, int)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">第二个</span><span class="n">int</span><span class="err">是占位符，传参时需要传两个</span><span class="n">int</span><span class="err">型，但无法对第二个</span><span class="n">int</span><span class="err">进行操作</span>
+</span></span><span class="line"><span class="cl"><span class="err">可以把占位参数跟默认参数写在一起，</span><span class="n">eg</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">fun</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">调用时可用</span> <span class="n">fun</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span><span class="err">也可以直接</span><span class="n">fun</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="3函数重载需要在-一个作用域下">3、函数重载（需要在 一个作用域下）</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">函数类型：函数的返回值、函数形参列表（参数个数、参数类型、参数顺序）
+</span></span><span class="line"><span class="cl">函数重载：
+</span></span><span class="line"><span class="cl">	① 函数同名，但形参列表不同
+</span></span><span class="line"><span class="cl">	② 返回值不是构成函数重载的条件
+</span></span><span class="line"><span class="cl">	③ 使用函数重载，尽量不要再使用默认参数，避免出现函数（歧义）冲突
+</span></span></code></pre></div><p><img src="C:/Users/henry/AppData/Roaming/Typora/typora-user-images/image-20230319094802884.png" alt="image-20230319094802884"></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">仅使用占位符也能构成重载</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="kt">double</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="p">(</span><span class="mf">1.3f</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="err">隐式转换成</span><span class="kt">double</span> <span class="err">再调</span><span class="n">f</span>
+</span></span><span class="line"><span class="cl"><span class="err">如果能够严格匹配调用的，重载调用</span>
+</span></span><span class="line"><span class="cl"><span class="err">如果没有完全匹配的，调用隐式转换</span> <span class="n">f</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">)</span><span class="err">：字符串会隐私转换成</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="err">如果匹配不到，返回调用失败</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 重定义，函数返回值类型并不是重载的必要条件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kt">char</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">重载的底层实现：</span> <span class="n">name</span> <span class="n">mangling</span><span class="p">(</span><span class="err">倾轧</span><span class="p">),</span> <span class="err">对函数名改名，进而区分参数不同的同名函数</span>
+</span></span><span class="line"><span class="cl"><span class="err">实现原理：用</span><span class="n">v</span> <span class="n">c</span> <span class="n">i</span> <span class="n">f</span> <span class="n">l</span> <span class="n">d</span><span class="err">表示</span><span class="kt">void</span> <span class="kt">char</span> <span class="kt">int</span> <span class="kt">float</span> <span class="kt">long</span> <span class="n">double</span><span class="err">及其引用</span>
+</span></span><span class="line"><span class="cl"><span class="n">eg</span><span class="err">：</span>
+</span></span><span class="line"><span class="cl">   	<span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="kt">char</span> <span class="n">a</span><span class="p">)</span>				<span class="c1">// f_c(char a)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="kt">char</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>		<span class="c1">// f_ci(char a, int b)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="cl"><span class="err">默认参数会不算函数重载，占位符算</span>
+</span></span><span class="line"><span class="cl">   	<span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="err">算</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="err">算</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="err">不算重载</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="err">和</span> <span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">)</span> <span class="err">是函数重载吗？</span>
+</span></span><span class="line"><span class="cl"><span class="err">是，编译器看到的是</span><span class="n">f_ii</span> <span class="n">f_iii</span><span class="err">，构成重载</span>    
+</span></span></code></pre></div><h2 id="4函数重载与函数指针">4、函数重载与函数指针</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 1、定义一种函数类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="nf">int</span><span class="p">(</span><span class="n">MY_FUN</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">main</span><span class="p">()</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">MY_FUN</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">fp</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">fp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 2、定义一种指向该函数的指针类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">typedef</span> <span class="nf">int</span><span class="p">(</span><span class="o">*</span> <span class="n">MY_FUN_P</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="p">()</span><span class="o">:</span><span class="err">同上</span>
+</span></span><span class="line"><span class="cl"><span class="n">main</span><span class="p">()</span><span class="err">：</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MY_FUN_P</span> <span class="n">fp1</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">fp1</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 函数指针使用时无需加*
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">fp1</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">常用方法</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 3、通过原有函数类型直接定义函数指针，无需typedef
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kt">int</span><span class="p">(</span><span class="o">*</span> <span class="n">fp2</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">fp2</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span> <span class="c1">// f_ii，此处会发生函数重载
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">fp2</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">定义的函数指针有几个参数，就只能重载匹配几个参数的</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>    
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="n">fp3</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="c1">//只能重载第一个f
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span><span class="p">(</span><span class="o">*</span><span class="n">fp2</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="c1">//只能重载第二个f
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="n">fp2</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span> <span class="c1">// 此处会发生函数重载匹配，在调用函数指针时，所调用的函数已经固定了
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">fp2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1">//报错，该函数指针无法接收三个参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">注：函数重载会有隐式转换，但调用具体函数执行时，类型不匹配会报错</span>
+</span></span></code></pre></div><h2 id="5类和对象">5、类和对象</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 类
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Advhero</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span><span class="o">:</span> <span class="c1">// 访问控制权限
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    	<span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    	<span class="kt">int</span> <span class="n">sex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">main</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">	<span class="err">定义对象</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Advhero</span> <span class="n">ahero</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">类与结构体的区别：</span>
+</span></span><span class="line"><span class="cl">    <span class="err">对结构体操作的函数必须写在全局中</span>
+</span></span><span class="line"><span class="cl">    <span class="err">对类操作的函数可以写在类里，可以无需传参</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">访问控制权限：</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span><span class="err">：在类的内部（</span><span class="p">{}</span><span class="err">作用范围为类的内部）、外部（</span><span class="n">eg</span><span class="err">：主函数中</span><span class="p">...</span><span class="err">）均可访问</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span><span class="err">：仅能在类的内部</span> <span class="p">{}</span><span class="err">作用范围内访问</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Animal</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">kind</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">run</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">kind</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; run&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">eat</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">kind</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; eat&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">在</span><span class="n">main</span><span class="err">中，只可以调用：</span><span class="n">dog</span><span class="p">.</span><span class="n">run</span><span class="p">()</span><span class="err">，不可以调用</span><span class="n">eat</span><span class="p">()</span>
+</span></span></code></pre></div><h2 id="6类的封装">6、类的封装</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">一般类的成员放在</span><span class="n">private</span><span class="err">中</span>
+</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="err">：保护控制权限，在单文件</span><span class="n">w</span><span class="err">中与</span><span class="n">private</span><span class="err">一样，在类的继承时与</span><span class="n">private</span><span class="err">有区别</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">将类的属性变量返回，使用</span><span class="n">getter</span><span class="err">、</span><span class="n">setter</span><span class="err">方法</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">get_year</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">year</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">set_year</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">year</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">year</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="err">不给具体访问权限时，默认为</span><span class="nc">private</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span></code></pre></div><h2 id="7面向过程和面向对象">7、面向过程和面向对象</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">eat</span><span class="p">(</span><span class="k">class</span> <span class="nc">Dog</span> <span class="o">&amp;</span> <span class="n">d</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">food</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Dog</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span> 
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">food</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;eat&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">food</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">main</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 面向过程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span> 	<span class="n">eat</span><span class="p">(</span><span class="n">dog</span><span class="p">,</span> <span class="err">”肉“</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Dog</span> <span class="n">dog</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="c1">// 面向对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="n">dog</span><span class="p">.</span><span class="n">eat</span><span class="p">();</span>
+</span></span></code></pre></div><h2 id="8计算圆的周长和面积">8、计算圆的周长和面积</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 正确写法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Circle</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="n">get_circle_girth</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">radius</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="nf">get_circle_area</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">set_radius</span><span class="p">(</span><span class="kt">int</span> <span class="n">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">radius</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">radius</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 经典错误写法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Circle</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="n">set_r</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">r</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">double</span> <span class="nf">get_a</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">area</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">double</span> <span class="nf">get_g</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">girth</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">double</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">double</span> <span class="n">area</span> <span class="o">=</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">double</span> <span class="n">girth</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">3.14</span> <span class="o">*</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p><img src="C:/Users/henry/AppData/Roaming/Typora/typora-user-images/image-20230320110702741.png" alt="image-20230320110702741"></p>
+<p>因为类的成员属性需要在内存中分配空间，而成员方法不需要分配空间</p>
+<p>把计算area、girth的写到private中在初始化分配内存时会给随机值，后续没有对area、girth的计算，所以出现随机值。</p>
+<h2 id="9类的多文件编写">9、类的多文件编写</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="p">.</span><span class="n">h</span><span class="err">文件</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 防止这个头文件被重复引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#pragma once 
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="err">写函数声明</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// .cpp
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="err">写函数实现</span>
+</span></span><span class="line"><span class="cl">    <span class="err">注意写类的实现时，一定需要在函数名前加上</span><span class="n">xx</span><span class="o">::</span>
+</span></span><span class="line"><span class="cl"><span class="kt">double</span> <span class="n">CircleA</span><span class="o">::</span><span class="n">get_x</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Cuce类判断方法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kt">bool</span> <span class="nf">equal</span><span class="p">(</span><span class="n">Cube</span> <span class="o">&amp;</span><span class="n">another</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">((</span><span class="n">x</span> <span class="o">==</span> <span class="n">another</span><span class="p">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="n">another</span><span class="p">.</span><span class="n">get_y</span><span class="p">())</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">another</span><span class="p">.</span><span class="n">get_z</span><span class="p">())))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 多文件
+</span></span></span></code></pre></div>
+  
+  <h4><i class="fas fa-share-alt" aria-hidden="true"></i>&nbsp;Share!</h4>
+<ul class="share-buttons">
+	<li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f02-%25E5%2586%2585%25E8%2581%2594%25E5%2587%25BD%25E6%2595%25B0%2f" target="_blank" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span class="sr-only">Share on Facebook</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://twitter.com/intent/tweet?source=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f02-%25E5%2586%2585%25E8%2581%2594%25E5%2587%25BD%25E6%2595%25B0%2f" target="_blank" title="Tweet"><i class="fab fa-twitter" aria-hidden="true"></i><span class="sr-only">Tweet</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://plus.google.com/share?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f02-%25E5%2586%2585%25E8%2581%2594%25E5%2587%25BD%25E6%2595%25B0%2f" target="_blank" title="Share on Google+"><i class="fab fa-google-plus" aria-hidden="true"></i><span class="sr-only">Share on Google+</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.tumblr.com/share?v=3&u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f02-%25E5%2586%2585%25E8%2581%2594%25E5%2587%25BD%25E6%2595%25B0%2f" target="_blank" title="Post to Tumblr"><i class="fab fa-tumblr" aria-hidden="true"></i><span class="sr-only">Post to Tumblr</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f02-%25E5%2586%2585%25E8%2581%2594%25E5%2587%25BD%25E6%2595%25B0%2f" target="_blank" title="Pin it"><i class="fab fa-pinterest-p" aria-hidden="true"></i><span class="sr-only">Pin it</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.reddit.com/submit?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f02-%25E5%2586%2585%25E8%2581%2594%25E5%2587%25BD%25E6%2595%25B0%2f" target="_blank" title="Submit to Reddit"><i class="fab fa-reddit-alien" aria-hidden="true"></i><span class="sr-only">Submit to Reddit</span></a>
+	</li>
+</ul>
+
+
+<style>
+	ul.share-buttons{
+	  list-style: none;
+	  padding: 0;
+	}
+
+	ul.share-buttons li{
+	  display: inline;
+	}
+
+	ul.share-buttons .sr-only{
+	  position: absolute;
+	  clip: rect(1px 1px 1px 1px);
+	  clip: rect(1px, 1px, 1px, 1px);
+	  padding: 0;
+	  border: 0;
+	  height: 1px;
+	  width: 1px;
+	  overflow: hidden;
+	}
+</style>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/01-%E5%9F%BA%E7%A1%80%E5%BC%95%E7%94%A8/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/01-%E5%9F%BA%E7%A1%80%E5%BC%95%E7%94%A8/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/06-%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7newdelete/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/06-%E9%87%8D%E8%BD%BD%E6%8B%AC%E5%8F%B7newdelete/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/ui.js"></script>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/menus.js"></script>
+
+
+
+
+
+
+
+
+<script src="/js/math-code.js"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+</body>
+</html>
+

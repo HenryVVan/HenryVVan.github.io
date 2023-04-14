@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.111.3">
+
+  <title>夯实基本功之C&#43;&#43;语言 &middot; Henry&#39;s blog</title>
+
+    
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet" type="text/css">
+
+  
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+
+  <link rel="shortcut icon" href="https://github.com/HenryVVan/HenryVVan.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small></small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>夯实基本功之C&#43;&#43;语言</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>06 Apr 2023, 15:21</time>
+  </div>
+
+  
+
+  
+
+  
+
+</div>
+
+  <h1 id="07继承与派生">07继承与派生</h1>
+<p>追求：高内聚，低耦合（原类依赖其他类越少越好）</p>
+<h2 id="1类与类之间的关系">1、类与类之间的关系</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">I</span> <span class="n">B</span> <span class="n">has</span> <span class="n">A</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">A</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// B中有A的对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">II</span> <span class="n">B</span> <span class="n">use</span> <span class="n">A</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fun1</span><span class="p">(</span><span class="n">A</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">fun2</span><span class="p">();</span> <span class="c1">// B中有函数需要使用A的对象
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 继承
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">III</span> <span class="n">B</span> <span class="n">is</span> <span class="n">A</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// B拥有A的全部成员变量、成员函数，且可以增加自己的内容
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><h2 id="2继承的基本定义">2、继承的基本定义</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">继承自父类的子类创建对象时，对象的空间与父类创建的对象内存空间不同。
+</span></span></code></pre></div><p><strong>简单继承eg</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Stu</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Stu</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">string</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">id</span> <span class="o">=</span> <span class="n">id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 加入分数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">Stu1</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Stu</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">   								<span class="c1">// 显式调用父类的构造函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Stu1</span><span class="p">(</span><span class="kt">int</span> <span class="n">id</span><span class="p">,</span> <span class="n">string</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">score</span><span class="p">)</span> <span class="o">:</span> <span class="n">Stu</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">score</span> <span class="o">=</span> <span class="n">score</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Stu</span><span class="o">::</span><span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">score</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">score</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>C++的可重用性通过继承来实现</p>
+<h2 id="3继承is-a相关的名词定义">3、继承(is A)相关的名词定义</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="n">A</span>
+</span></span><span class="line"><span class="cl">		  <span class="o">/</span>	  \
+</span></span><span class="line"><span class="cl">		<span class="n">B</span>		<span class="n">C</span>
+</span></span><span class="line"><span class="cl">	 <span class="o">/</span>	<span class="err">\</span>  <span class="err">\</span>  <span class="o">/</span>
+</span></span><span class="line"><span class="cl">	<span class="n">C1</span>	<span class="n">C2</span> 	<span class="n">C3</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="err">父类</span><span class="o">/</span><span class="err">基类</span>			<span class="err">子类</span><span class="o">/</span><span class="err">派生类</span>
+</span></span><span class="line"><span class="cl">    <span class="n">B</span><span class="err">是</span><span class="n">A</span><span class="err">的派生类，又是</span><span class="n">C1</span><span class="err">、</span><span class="n">C2</span><span class="err">、</span><span class="n">C3</span><span class="err">的基类</span>
+</span></span><span class="line"><span class="cl">    <span class="n">C1</span><span class="err">是</span><span class="n">B</span><span class="err">的子类（单继承）</span>
+</span></span><span class="line"><span class="cl">    <span class="n">C3</span><span class="err">是</span><span class="n">B</span><span class="err">、</span><span class="n">C</span><span class="err">的派生类（多继承）</span>
+</span></span></code></pre></div><h2 id="4类的继承方式">4、类的继承方式</h2>
+<p>**注意：**关键字<code>public</code>在类中表示访问控制权限，在被子类继承时表示<code>公有继承</code></p>
+<p><code>protected继承：在当前类与子类中可以访问，类外不可以访问</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">规则：</span>
+</span></span><span class="line"><span class="cl">	<span class="err">①</span> <span class="err">父类中的</span><span class="k">private</span> <span class="err">成员，不管哪种继承方式，子类均不可见</span>
+</span></span><span class="line"><span class="cl">	<span class="err">②</span> <span class="err">如果是</span><span class="n">public</span><span class="err">继承，子类中的访问控制权限不变</span>
+</span></span><span class="line"><span class="cl">	<span class="err">③</span> <span class="err">如果是</span><span class="n">protected</span><span class="err">继承，子类中父类的</span><span class="k">public</span><span class="err">、</span><span class="n">protected</span><span class="err">成员均变成</span><span class="k">protected</span>
+</span></span><span class="line"><span class="cl">	<span class="err">④</span> <span class="err">如果是</span><span class="n">private</span><span class="err">继承，子类中父类的</span><span class="k">public</span><span class="err">、</span><span class="n">protected</span><span class="err">成员均变成</span><span class="k">private</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="err">可以得到如下表格</span>
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th style="text-align:center">父类中的访问权限\继承方式</th>
+<th style="text-align:center">public</th>
+<th style="text-align:center">protected</th>
+<th style="text-align:center">private</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">public</td>
+<td style="text-align:center">public</td>
+<td style="text-align:center">protected</td>
+<td style="text-align:center">\</td>
+</tr>
+<tr>
+<td style="text-align:center">protected</td>
+<td style="text-align:center">protected</td>
+<td style="text-align:center">protected</td>
+<td style="text-align:center">\</td>
+</tr>
+<tr>
+<td style="text-align:center">private</td>
+<td style="text-align:center">private</td>
+<td style="text-align:center">private</td>
+<td style="text-align:center">\</td>
+</tr>
+</tbody>
+</table>
+<p>判断是哪种继承</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">先看：调用的成员变量（或成员函数）是在类外还是类中
+</span></span><span class="line"><span class="cl">再看：子类的继承方式
+</span></span><span class="line"><span class="cl">最后看：当前的子类中变量在父类中的访问控制权限
+</span></span></code></pre></div><h2 id="5类的赋值兼容原则">5、类的赋值兼容原则</h2>
+<p><strong>不可以用父类给子类赋值，因为父类空间 &lt;= 子类空间；反之则成立</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">① 子类对象可以直接当父类对象使用
+</span></span><span class="line"><span class="cl">② 子类对象可以给父类对象赋值
+</span></span><span class="line"><span class="cl">③ 子类对象也可以直接初始化父类对象
+</span></span><span class="line"><span class="cl">④ 父类指针可以直接指向子类对象 (多态)
+</span></span><span class="line"><span class="cl">⑤ 父类引用可以直接引用子类对象
+</span></span></code></pre></div><p><strong>④举例：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Parent</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Son</span><span class="o">:</span> <span class="k">public</span> <span class="n">Parent</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="err">父类所占内存</span>			<span class="err">子类所占内存</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">int</span> <span class="n">a</span>				<span class="kt">int</span> <span class="n">a</span>
+</span></span><span class="line"><span class="cl">							<span class="kt">int</span> <span class="n">b</span>
+</span></span><span class="line"><span class="cl"><span class="err">所以可以用子类给父类赋值</span>
+</span></span><span class="line"><span class="cl"><span class="n">Parent</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Son</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Son</span> <span class="n">ss</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">Parent</span> <span class="n">pp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ss</span><span class="p">;</span> <span class="c1">// 父类指针可以直接指向子类对象内存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="err">好处</span><span class="o">:</span><span class="err">写一个传父类的接口，所以的子类都可以调用</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">print</span><span class="p">(</span><span class="n">Parent</span> <span class="o">&amp;</span> <span class="n">p</span> <span class="o">/</span> <span class="n">Parent</span> <span class="o">*</span> <span class="n">pp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="err">子引用、子类地址都可以直接传入，进行调用</span>
+</span></span></code></pre></div><h2 id="6子类中的构造和析构">6、子类中的构造和析构</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">在子类构造前，一定会先调用父类的构造函数，其后子类先析构，父类再析构。</span>
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">P</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">P</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;P(int)&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">P</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;~P()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">S</span> <span class="o">:</span> <span class="k">public</span> <span class="n">P</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">S</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="o">:</span> <span class="n">P</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;S(int, int)&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">S</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;~S()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="n">P</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">S</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">~</span><span class="n">S</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="o">~</span><span class="n">P</span><span class="p">()</span>
+</span></span></code></pre></div><h2 id="7子类与父类中出现重名变量">7、子类与父类中出现重名变量</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">用域名去访问，此外再传参时注意区分一下即可，在子类中的</span><span class="n">this</span><span class="err">也是指向子类对象的指针</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">S</span> <span class="o">:</span> <span class="k">public</span> <span class="n">P</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">S</span><span class="p">(</span><span class="kt">int</span> <span class="n">p_a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s_a</span><span class="p">)</span> <span class="o">:</span> <span class="n">P</span><span class="p">(</span><span class="n">p_a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">a</span> <span class="o">=</span> <span class="n">s_a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="n">S</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;~S()&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">P</span><span class="o">::</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h2 id="8继承中的static">8、继承中的static</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="err">父类中</span><span class="n">public</span><span class="err">的静态成员变量，仍为整个家族类公有。</span>
+</span></span></code></pre></div>
+  
+  <h4><i class="fas fa-share-alt" aria-hidden="true"></i>&nbsp;Share!</h4>
+<ul class="share-buttons">
+	<li><a href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f07-%25E7%25BB%25A7%25E6%2589%25BF%25E4%25B8%258E%25E6%25B4%25BE%25E7%2594%259F%2f" target="_blank" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span class="sr-only">Share on Facebook</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://twitter.com/intent/tweet?source=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f07-%25E7%25BB%25A7%25E6%2589%25BF%25E4%25B8%258E%25E6%25B4%25BE%25E7%2594%259F%2f" target="_blank" title="Tweet"><i class="fab fa-twitter" aria-hidden="true"></i><span class="sr-only">Tweet</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="https://plus.google.com/share?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f07-%25E7%25BB%25A7%25E6%2589%25BF%25E4%25B8%258E%25E6%25B4%25BE%25E7%2594%259F%2f" target="_blank" title="Share on Google+"><i class="fab fa-google-plus" aria-hidden="true"></i><span class="sr-only">Share on Google+</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.tumblr.com/share?v=3&u=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f07-%25E7%25BB%25A7%25E6%2589%25BF%25E4%25B8%258E%25E6%25B4%25BE%25E7%2594%259F%2f" target="_blank" title="Post to Tumblr"><i class="fab fa-tumblr" aria-hidden="true"></i><span class="sr-only">Post to Tumblr</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://pinterest.com/pin/create/button/?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f07-%25E7%25BB%25A7%25E6%2589%25BF%25E4%25B8%258E%25E6%25B4%25BE%25E7%2594%259F%2f" target="_blank" title="Pin it"><i class="fab fa-pinterest-p" aria-hidden="true"></i><span class="sr-only">Pin it</span></a>
+	</li>&nbsp;&nbsp;&nbsp;
+	<li><a href="http://www.reddit.com/submit?url=https%3a%2f%2fgithub.com%2fHenryVVan%2fHenryVVan.github.io%2fpost%2fc11%2f07-%25E7%25BB%25A7%25E6%2589%25BF%25E4%25B8%258E%25E6%25B4%25BE%25E7%2594%259F%2f" target="_blank" title="Submit to Reddit"><i class="fab fa-reddit-alien" aria-hidden="true"></i><span class="sr-only">Submit to Reddit</span></a>
+	</li>
+</ul>
+
+
+<style>
+	ul.share-buttons{
+	  list-style: none;
+	  padding: 0;
+	}
+
+	ul.share-buttons li{
+	  display: inline;
+	}
+
+	ul.share-buttons .sr-only{
+	  position: absolute;
+	  clip: rect(1px 1px 1px 1px);
+	  clip: rect(1px, 1px, 1px, 1px);
+	  padding: 0;
+	  border: 0;
+	  height: 1px;
+	  width: 1px;
+	  overflow: hidden;
+	}
+</style>
+
+
+  
+<div class="prev-next-post pure-g">
+  <div class="pure-u-1-24" style="text-align: left;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/05-this%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD/"><i class="fa fa-chevron-left"></i></a>
+    
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="prev">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/05-this%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-2-24">
+    &nbsp;
+  </div>
+  <div class="pure-u-10-24">
+    
+    <nav class="next">
+      <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/08-%E5%A4%9A%E7%BB%A7%E6%89%BF%E8%99%9A%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81%E8%99%9A%E6%9E%90%E6%9E%84/">夯实基本功之C&#43;&#43;语言</a>
+    </nav>
+    
+  </div>
+  <div class="pure-u-1-24" style="text-align: right;">
+    
+    <a href="https://github.com/HenryVVan/HenryVVan.github.io/post/c11/08-%E5%A4%9A%E7%BB%A7%E6%89%BF%E8%99%9A%E7%BB%A7%E6%89%BF%E5%A4%9A%E6%80%81%E8%99%9A%E6%9E%90%E6%9E%84/"><i class="fa fa-chevron-right"></i></a>
+    
+  </div>
+</div>
+
+
+  
+  
+  
+  
+
+  
+
+</div>
+
+</div>
+</div>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/ui.js"></script>
+<script src="https://github.com/HenryVVan/HenryVVan.github.iojs/menus.js"></script>
+
+
+
+
+
+
+
+
+<script src="/js/math-code.js"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+</body>
+</html>
+
