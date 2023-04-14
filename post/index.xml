@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Henry&#39;s blog</title>
+    <link>https://HenryVVan.github.io/%20--buildDrafts/post/</link>
+    <description>Recent content in Posts on Henry&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 13 Apr 2023 19:53:08 +0800</lastBuildDate><atom:link href="https://HenryVVan.github.io/%20--buildDrafts/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DP概论</title>
+      <link>https://HenryVVan.github.io/%20--buildDrafts/post/test/</link>
+      <pubDate>Thu, 13 Apr 2023 19:53:08 +0800</pubDate>
+      
+      <guid>https://HenryVVan.github.io/%20--buildDrafts/post/test/</guid>
+      <description>dp概论 dp的基本要求 1、最优子结构：大问题的（最优）解可以由小问题的（最优）解推出，注意：在问题拆解过程中不能出现无限递归；
+2、无后效性：未来与过去无关，一旦得到了一个小问题的解，如何得到它的解的过程不影响大问题的求解。
+dp的两个元素 1、**状态：**求解过程进行到了哪一步，可以理解为一个子问题；
+2、**转移：**从一个状态（小问题）的（最优）解推导出另一个状态（大问题）的（最优解）的过程。
+1：单源最短路径板子 给定一幅 n(1≤n≤1000) 个点 m(1≤m≤1000) 条边的有向图，每条边有个边权，代表经过这条边需要花费的时间，我们只能从编号小的点走到编号大的点，问从 1 号点走到 n 号点最少需要花费多少时间？</description>
+    </item>
+    
+  </channel>
+</rss>
