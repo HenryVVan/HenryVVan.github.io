@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Henry&#39;s blog</title>
-    <link>https://github.com/HenryVVan/HenryVVan.github.io/categories/</link>
+    <link>https://henryvvan.github.io/categories/</link>
     <description>Recent content in Categories on Henry&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language><atom:link href="https://github.com/HenryVVan/HenryVVan.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language><atom:link href="https://henryvvan.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
